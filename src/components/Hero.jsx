@@ -1,69 +1,115 @@
 import { useEffect, useRef } from 'react';
 import './Hero.css';
+import './Hero_new.css';
+
 
 const Hero = () => {
-  const particlesRef = useRef(null);
+ const particlesRef = useRef(null);
 
-  useEffect(() => {
-    // Create floating particles
-    const createParticles = () => {
-      if (particlesRef.current) {
-        for (let i = 0; i < 20; i++) {
-          const particle = document.createElement('div');
-          particle.className = 'particle';
-          particle.style.left = Math.random() * 100 + '%';
-          particle.style.animationDelay = Math.random() * 15 + 's';
-          particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
-          particlesRef.current.appendChild(particle);
-        }
-      }
-    };
 
-    // Parallax effect for hero grid
-    const handleParallax = () => {
-      const scrolled = window.pageYOffset;
-      const heroGrid = document.querySelector('.hero-grid');
-      if (heroGrid) {
-        heroGrid.style.transform = `translate(${scrolled * 0.1}px, ${scrolled * 0.1}px)`;
-      }
-    };
+ useEffect(() => {
+   const createParticles = () => {
+     if (particlesRef.current) {
+       for (let i = 0; i < 80; i++) {
+         const particle = document.createElement('div');
+         particle.className = 'particle';
+         particle.style.left = Math.random() * 100 + '%';
+         particle.style.top = Math.random() * 100 + '%';
+         particle.style.animationDelay = Math.random() * 10 + 's';
+         particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+         particle.style.opacity = Math.random() * 0.4 + 0.2;
 
-    createParticles();
-    window.addEventListener('scroll', handleParallax);
 
-    return () => {
-      window.removeEventListener('scroll', handleParallax);
-    };
-  }, []);
+         // Every 4th particle is a large, blurred, soft-colored circle
+         if (i % 4 === 0) {
+           const isBlue = Math.random() < 0.5;
+           particle.style.background = isBlue
+             ? 'rgba(102, 178, 255, 0.25)'   // light blue
+             : 'rgba(178, 102, 255, 0.25)';  // light purple
+           const size = Math.random() * 80 + 40;
+           particle.style.width = `${size}px`;
+           particle.style.height = `${size}px`;
+           particle.style.borderRadius = '50%';
+           particle.style.filter = 'blur(4px)';
+         } else {
+           // Black dot particles
+           particle.style.width = '5px';
+           particle.style.height = '5px';
+           particle.style.background = 'rgba(0, 0, 0, 0.5)';
+           particle.style.borderRadius = '50%';
+         }
 
-  return (
-    <section id="hero" className="hero">
-      <div className="hero-grid"></div>
-      <div className="floating-elements">
-        <div className="floating-shape"></div>
-        <div className="floating-shape"></div>
-        <div className="floating-shape"></div>
-        <div className="floating-shape"></div>
-      </div>
-      <div className="particles" ref={particlesRef}></div>
-      <div className="hero-content">
-        <div className="hero-badge">
-          <span>🤖 Premium STEM Education</span>
-        </div>
-        <h1 className="glow-text">FusionBots</h1>
-        <p className="hero-subtitle">
-          Revolutionizing STEM education with cutting-edge robotics kits, sensors, and interactive learning experiences. 
-          Empowering the next generation of innovators with hands-on technology that sparks curiosity and builds the future.
-        </p>
-        <div className="hero-cta">
-          <a href="https://fusionbots.myshopify.com" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-            🛒 Shop STEM Kits at Our Store
-          </a>
-          <a href="#about" className="btn btn-secondary">Our Story</a>
-        </div>
-      </div>
-    </section>
-  );
+
+         particlesRef.current.appendChild(particle);
+       }
+     }
+   };
+
+
+   const handleParallax = () => {
+     const scrolled = window.pageYOffset;
+     const heroGrid = document.querySelector('.hero-grid');
+     if (heroGrid) {
+       heroGrid.style.transform = `translate(${scrolled * 0.1}px, ${scrolled * 0.1}px)`;
+     }
+   };
+
+
+   createParticles();
+   window.addEventListener('scroll', handleParallax);
+   return () => window.removeEventListener('scroll', handleParallax);
+ }, []);
+
+
+ return (
+   <section id="hero" className="hero">
+     <div className="hero-grid"></div>
+
+
+     <div className="floating-elements">
+       <div className="floating-shape"></div>
+       <div className="floating-shape"></div>
+       <div className="floating-shape"></div>
+       <div className="floating-shape"></div>
+     </div>
+
+
+     <div className="particles" ref={particlesRef}></div>
+
+
+     <div className="hero-content">
+       <div className="hero-badge">
+         <span>Empowering Young Innovators</span>
+       </div>
+
+
+       <h1 className="glow-logo">FusionBots</h1>
+
+
+       <p className="hero-subtitle">
+         FusionBots was founded to make STEM education accessible and affordable for all students.
+         By offering rugged robotics kits and innovative tech gadgets, we combine practical learning with business sustainability — using every product sold to fuel our mission of inspiring the next generation of builders, coders, and problem-solvers.
+       </p>
+
+
+       <div className="hero-cta">
+         <a
+           href="https://fusionbots.myshopify.com"
+           className="btn btn-primary"
+           target="_blank"
+           rel="noopener noreferrer"
+         >
+           🛒 Shop STEM Kits
+         </a>
+         <a href="#about" className="btn btn-secondary">Learn More</a>
+       </div>
+     </div>
+   </section>
+ );
 };
 
+
 export default Hero;
+
+
+
