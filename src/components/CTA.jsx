@@ -24,7 +24,7 @@ const CTA = () => {
           </div>
 
           <div className="cta-actions">
-            <a href="https://fusion-bots.myshopify.com" className="cta-primary-btn" target="_blank" rel="noopener noreferrer">
+            <a href="https://fusionbots.myshopify.com" className="cta-primary-btn" target="_blank" rel="noopener noreferrer">
               🚀 Shop Now - STEM Kits
             </a>
             
