@@ -48,7 +48,7 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        <div className="logo">Fusion Bots</div>
+        <div className="logo">FusionBots</div>
         <ul className="nav-links">
           {navLinks.map(({ href, label }) => (
             <li key={href}>
