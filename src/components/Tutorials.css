@@ -1,0 +1,66 @@
+/* Use the same style as About section - clean and consistent */.path-subtitle {  font-size: 1rem;  color: var(--accent-blue);  font-weight: 500;  margin-bottom: 0.5rem;}.path-description {  color: var(--gray-600);  line-height: 1.6;  margin-bottom: 1.5rem;}.path-meta {  margin-bottom: 1.5rem;}.meta-row {  display: flex;  justify-content: space-between;  align-items: center;  padding: 0.5rem 0;  border-bottom: 1px solid var(--gray-100);  font-size: 0.9rem;}.meta-row:last-child {  border-bottom: none;}.meta-label {  color: var(--gray-500);  font-weight: 500;}.path-features {  margin-bottom: 2rem;}.path-features h4 {  font-size: 1rem;  font-weight: 600;  margin-bottom: 0.75rem;  color: var(--gray-800);}.path-features ul {  list-style: none;  padding: 0;  margin: 0;}.path-features li {  padding: 0.5rem 0;  color: var(--gray-600);  border-bottom: 1px solid var(--gray-100);  font-size: 0.9rem;  position: relative;  padding-left: 1rem;}.path-features li:last-child {  border-bottom: none;}.path-features li::before {  content: '';  position: absolute;  left: 0;  top: 0.75rem;  width: 4px;  height: 4px;  background: var(--accent-blue);  border-radius: 50%;}.path-action {  text-align: center;  margin-top: 1.5rem;}/* Responsive Design */@media (max-width: 768px) {  .path-features li {    padding: 0.4rem 0;    padding-left: 0.75rem;  }    .path-features li::before {    top: 0.65rem;  }}/* Keep existing feature card styles from About section */
+.feature-card {
+  position: relative;
+}
+
+/* Make the gradient border always visible */
+.feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--gradient-1);
+  transform: scaleX(1); /* Always visible instead of scaleX(0) */
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.feature-card:nth-child(2)::before {
+  background: var(--gradient-2);
+}
+
+/* Add subtle shine effect */
+.feature-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shine 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  50% { left: 100%; }
+  100% { left: -100%; }
+}
+
+.feature-card .feature-icon {
+  width: 60px;
+  height: 60px;
+  background: var(--gradient-1);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.feature-card:nth-child(2) .feature-icon {
+  background: var(--gradient-2);
+}
+
+.feature-card h3 {
+  font-size: 1.375rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.025em;
+}
