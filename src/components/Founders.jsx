@@ -15,7 +15,8 @@ const Founders = () => {
     {
       name: 'Ojasva Mishra',
       role: 'Co-Founder & CEO',
-      background: 'Former MIT Robotics Lab researcher with 15+ years in educational technology. PhD in Mechanical Engineering and passionate advocate for accessible STEM education.',
+      background: 'I’m Ojasva Mishra, cofounder and CEO of FusionBots. I lead the engineering, curriculum, and strategy to make robotics education accessible, practical, and innovation-driven for students. With a background in competitive robotics, aerospace research, and STEM innovation, I’ve built and led teams pushing the limits of engineering, autonomy, and real-world problem solving.
+',
       image: OjasM,
       expertise: 'Robotics • Education • Innovation',
       gradient: 'linear-gradient(135deg, #7877c6, #ff77c6)'
