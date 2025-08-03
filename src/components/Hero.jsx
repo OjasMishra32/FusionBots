@@ -56,8 +56,8 @@ const Hero = () => {
           Empowering the next generation of innovators with hands-on technology that sparks curiosity and builds the future.
         </p>
         <div className="hero-cta">
-          <a href="https://fusion-bots.myshopify.com" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-            🛒 Shop STEM Kits
+          <a href="https://fusionbots.myshopify.com" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
+            🛒 Our Store
           </a>
           <a href="#about" className="btn btn-secondary">Our Story</a>
         </div>
