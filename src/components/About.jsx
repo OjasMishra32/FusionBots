@@ -11,7 +11,7 @@ const About = () => {
     {
       id: '01',
       title: 'Quality Engineering',
-      description: 'Every Fusion Bots kit is meticulously designed and tested to ensure durability, safety, and educational excellence. We believe in products that last and inspire.'
+      description: 'Every FusionBots kit is meticulously designed and tested to ensure durability, safety, and educational excellence. We believe in products that last and inspire.'
     },
     {
       id: '02',
@@ -21,7 +21,7 @@ const About = () => {
     {
       id: '03',
       title: 'Future-Ready Skills',
-      description: 'We\'re not just teaching robotics—we\'re preparing minds for tomorrow. Critical thinking, problem-solving, and innovation are at the heart of every Fusion Bots experience.'
+      description: 'We\'re not just teaching robotics—we\'re preparing minds for tomorrow. Critical thinking, problem-solving, and innovation are at the heart of every FusionBots experience.'
     }
   ];
 
