@@ -48,9 +48,9 @@ const Hero = () => {
       <div className="particles" ref={particlesRef}></div>
       <div className="hero-content">
         <div className="hero-badge">
-          <span>� Premium STEM Education</span>
+          <span>🤖 Premium STEM Education</span>
         </div>
-        <h1 className="glow-text">Fusion Bots</h1>
+        <h1 className="glow-text">FusionBots</h1>
         <p className="hero-subtitle">
           Revolutionizing STEM education with cutting-edge robotics kits, sensors, and interactive learning experiences. 
           Empowering the next generation of innovators with hands-on technology that sparks curiosity and builds the future.
