@@ -57,7 +57,7 @@ const Hero = () => {
         </p>
         <div className="hero-cta">
           <a href="https://fusionbots.myshopify.com" className="btn btn-primary" target="_blank" rel="noopener noreferrer">
-            🛒 Our Store
+            🛒 Shop STEM Kits at Our Store
           </a>
           <a href="#about" className="btn btn-secondary">Our Story</a>
         </div>
