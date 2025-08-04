@@ -11,7 +11,6 @@
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  will-change: transform;
 }
 
 .navbar.scrolled {
@@ -27,7 +26,6 @@
   gap: 1.8rem;
 }
 
-/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -50,12 +48,14 @@
   object-fit: cover;
 }
 
-/* Nav links */
 .nav-links {
   display: flex;
   gap: 0.4rem;
   list-style: none;
-  overflow: visible; /* allows blue pill to show fully */
+}
+
+.nav-item {
+  scroll-snap-align: center;
 }
 
 .nav-link {
@@ -73,10 +73,10 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -4px;
-  right: -4px;
-  bottom: -2px;
+  top: -4px;
+  left: -8px;
+  right: -8px;
+  bottom: -4px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
@@ -94,7 +94,7 @@
   color: white;
 }
 
-/* Responsive */
+/* Mobile-only styling */
 @media (max-width: 768px) {
   .navbar {
     padding: 0.4rem 0.6rem;
@@ -108,19 +108,23 @@
 
   .nav-links {
     display: flex;
-    gap: 0.5rem; /* slightly more compact spacing */
-    overflow: visible; /* ensure pill shows */
-    justify-content: space-between;
+    gap: 1.4rem;
+    overflow-x: hidden; /* stops manual swiping */
     flex: 1;
+    scroll-snap-type: x mandatory;
   }
 
   .nav-link {
-    padding: 0.5rem 0.9rem; /* tighter padding */
+    padding: 0.55rem 1rem;
     font-size: 0.85rem;
+    opacity: 0.5; /* fade inactive */
+  }
+
+  .nav-link.active {
+    opacity: 1; /* fully visible active */
   }
 }
 
-/* Gradient animation for logo */
 @keyframes gradientWave {
   0% { background-position: 0% center; }
   100% { background-position: 200% center; }
