@@ -44,17 +44,10 @@ const Navbar = () => {
     if (window.innerWidth <= 768 && navLinksRef.current) {
       const activeEl = navLinksRef.current.querySelector('.nav-link.active');
       if (activeEl) {
-        const container = navLinksRef.current;
-        const activeRect = activeEl.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-
-        const targetScroll =
-          activeEl.offsetLeft - container.clientWidth / 2 + activeEl.clientWidth / 2;
-
-        // Smooth easing scroll
-        container.scrollTo({
-          left: targetScroll,
-          behavior: 'smooth'
+        activeEl.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest'
         });
       }
     }
