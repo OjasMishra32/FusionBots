@@ -5,50 +5,34 @@ import logo from '../assets/fusionbots-logo.jpeg';
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('hero');
+  const [menuOpen, setMenuOpen] = useState(false);
   const navLinksRef = useRef(null);
 
   useEffect(() => {
-    const updateNavbar = () => {
-      setIsScrolled(window.pageYOffset > 100);
-    };
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 100);
 
-    const updateActiveNavLink = () => {
       const sections = document.querySelectorAll('section[id]');
       let current = '';
-
       sections.forEach(section => {
         const sectionTop = section.getBoundingClientRect().top;
         if (sectionTop <= 150) {
           current = section.getAttribute('id');
         }
       });
-
-      if (current) {
-        setActiveLink(current);
-      }
-    };
-
-    const handleScroll = () => {
-      updateNavbar();
-      updateActiveNavLink();
+      if (current) setActiveLink(current);
     };
 
     window.addEventListener('scroll', handleScroll);
     handleScroll();
-
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto-center the active link
   useEffect(() => {
     if (navLinksRef.current) {
       const activeEl = navLinksRef.current.querySelector('.nav-link.active');
       if (activeEl) {
-        activeEl.scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-          block: 'nearest'
-        });
+        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center' });
       }
     }
   }, [activeLink]);
@@ -65,10 +49,13 @@ const Navbar = () => {
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
         <div className="logo">
-          <img src={logo} alt="FusionBots Logo" className="logo-img" />
-          <span>FusionBots</span>
+          <a href="https://fusionbots.myshopify.com/">
+            <img src={logo} alt="FusionBots Logo" className="logo-img" />
+          </a>
+          <a href="https://fusionbots.myshopify.com/">FusionBots</a>
         </div>
 
+        {/* Desktop nav */}
         <ul className="nav-links" ref={navLinksRef}>
           {navLinks.map(({ href, label }) => (
             <li key={href} className="nav-item">
@@ -81,7 +68,33 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+
+        {/* Mobile hamburger */}
+        <div
+          className={`hamburger ${menuOpen ? 'active' : ''}`}
+          onClick={() => setMenuOpen(prev => !prev)}
+        >
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
+
+      {/* Mobile dropdown menu */}
+      {menuOpen && (
+        <div className="mobile-menu">
+          {navLinks.map(({ href, label }) => (
+            <a
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              className={activeLink === href.substring(1) ? 'active' : ''}
+            >
+              {label}
+            </a>
+          ))}
+        </div>
+      )}
     </nav>
   );
 };
