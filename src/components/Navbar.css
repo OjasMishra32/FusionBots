@@ -7,7 +7,7 @@
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 40px;
-  padding: 0.6rem 1.4rem; /* slightly more space so pill doesn't hit logo */
+  padding: 0.6rem 1.4rem 0.6rem 0.4rem; /* reduced left padding */
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -37,7 +37,6 @@
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: gradientWave 4s ease-in-out infinite;
-  margin-right: 1rem; /* pushes first link away from logo */
 }
 
 .logo-img {
@@ -50,13 +49,13 @@
 /* Desktop nav links */
 .nav-links {
   display: flex;
-  gap: 1rem; /* even space between links */
+  gap: 1rem;
   list-style: none;
 }
 
 .nav-link {
   position: relative;
-  padding: 0.4rem 0.8rem; /* reduced padding so pill is smaller */
+  padding: 0.4rem 0.8rem;
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 800;
@@ -69,7 +68,7 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -3px; /* smaller pill */
+  top: -3px;
   left: -6px;
   right: -6px;
   bottom: -3px;
@@ -165,6 +164,9 @@
 
 /* Mobile view */
 @media (max-width: 768px) {
+  .navbar {
+    padding: 0.6rem 1.2rem; /* restore normal padding on mobile */
+  }
   .nav-links {
     display: none;
   }
