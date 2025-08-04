@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import './Navbar.css';
 import logo from '../assets/fusionbots-logo.jpeg';
 
@@ -6,7 +6,6 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('hero');
   const [menuOpen, setMenuOpen] = useState(false);
-  const navLinksRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,18 +23,8 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  useEffect(() => {
-    if (navLinksRef.current) {
-      const activeEl = navLinksRef.current.querySelector('.nav-link.active');
-      if (activeEl) {
-        activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center' });
-      }
-    }
-  }, [activeLink]);
 
   const navLinks = [
     { href: '#hero', label: 'Home' },
@@ -56,9 +45,9 @@ const Navbar = () => {
         </div>
 
         {/* Desktop nav */}
-        <ul className="nav-links" ref={navLinksRef}>
+        <ul className="nav-links">
           {navLinks.map(({ href, label }) => (
-            <li key={href} className="nav-item">
+            <li key={href}>
               <a
                 href={href}
                 className={`nav-link ${activeLink === href.substring(1) ? 'active' : ''}`}
@@ -72,7 +61,7 @@ const Navbar = () => {
         {/* Mobile hamburger */}
         <div
           className={`hamburger ${menuOpen ? 'active' : ''}`}
-          onClick={() => setMenuOpen(prev => !prev)}
+          onClick={() => setMenuOpen(!menuOpen)}
         >
           <span></span>
           <span></span>
@@ -80,9 +69,9 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile dropdown menu */}
+      {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="mobile-menu">
+        <div className={`mobile-menu ${menuOpen ? 'open' : ''}`}>
           {navLinks.map(({ href, label }) => (
             <a
               key={href}
