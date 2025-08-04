@@ -7,7 +7,7 @@
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 40px;
-  padding: 0.4rem 1.4rem 0.4rem 0.6rem; /* reduced height + left padding */
+  padding: 0.4rem 0.8rem; /* reduced horizontal padding for snug fit */
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -29,7 +29,7 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.6rem; /* increased slightly to prevent overlap */
+  gap: 0.4rem; /* reduced gap for tighter logo + text alignment */
   font-size: 1rem;
   font-weight: 900;
   background: linear-gradient(90deg, #0000FF, #000000, #0000FF);
@@ -40,7 +40,7 @@
 }
 
 .logo-img {
-  height: 50px; /* slightly smaller to match snug height */
+  height: 50px; /* slightly smaller */
   width: 50px;
   border-radius: 50%;
   object-fit: cover;
@@ -49,13 +49,13 @@
 /* Desktop nav links */
 .nav-links {
   display: flex;
-  gap: 1rem; /* keeps spacing balanced */
+  gap: 0.6rem; /* reduced gap between nav items */
   list-style: none;
 }
 
 .nav-link {
   position: relative;
-  padding: 0.4rem 0.85rem; /* adjusted for smaller navbar height */
+  padding: 0.5rem 0.9rem; /* smaller pill size */
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 800;
@@ -68,10 +68,10 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -3px;
-  left: -6px;
-  right: -6px;
-  bottom: -3px;
+  top: -6px;
+  left: -12px;
+  right: -12px;
+  bottom: -6px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
