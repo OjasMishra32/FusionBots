@@ -34,7 +34,7 @@ const Founders = () => {
    {
      name: 'Anvay Ajmera',
      role: 'Co-Founder & Head of Innovation',
-     background: 'Former Google AI researcher and Berkeley PhD in Computer Science. Pioneer in educational AI and adaptive learning systems for STEM education.',
+     background: 'I drive innovation, design, software, and strategy to make hands-on STEM education accessible and engaging for students everywhere. With experience in engineering and robotics, and as a youth delegate and 2-time United Nations speaker advocating for equitable access to quality STEM, I develop scalable educational tools to inspire curiosity, problem-solving, and lifelong skills.',
      image: Anvay,
      expertise: 'AI • Machine Learning • Pedagogy',
      gradient: 'linear-gradient(135deg, #ff77c6, #00d4ff)'
