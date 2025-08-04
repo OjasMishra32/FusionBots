@@ -12,7 +12,6 @@
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   will-change: transform;
-  overflow: hidden;
 }
 
 .navbar.scrolled {
@@ -28,7 +27,7 @@
   gap: 1.8rem;
 }
 
-/* Logo section */
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -40,9 +39,8 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: -0.025em;
   animation: gradientWave 4s ease-in-out infinite;
-  margin-left: -0.8rem; /* keeps it hugging white edge on desktop */
+  margin-left: -0.8rem;
 }
 
 .logo-img {
@@ -50,25 +48,16 @@
   width: 56px;
   border-radius: 50%;
   object-fit: cover;
-  display: block;
 }
 
-/* Navigation links container */
+/* Nav links */
 .nav-links {
   display: flex;
   gap: 0.4rem;
   list-style: none;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none; /* hide scrollbar in Firefox */
+  overflow: visible; /* no clipping */
 }
 
-.nav-links::-webkit-scrollbar {
-  display: none; /* hide scrollbar in Chrome/Safari */
-}
-
-/* Navigation link items */
 .nav-link {
   position: relative;
   padding: 0.55rem 1.1rem;
@@ -76,23 +65,18 @@
   text-decoration: none;
   font-weight: 800;
   font-size: 0.9rem;
-  line-height: 1.2;
   border-radius: 9999px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  letter-spacing: -0.025em;
+  transition: all 0.3s ease;
   white-space: nowrap;
-  flex-shrink: 0;
-  scroll-snap-align: center;
-  z-index: 1;
 }
 
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -3px;
-  left: -6px;
-  right: -6px;
-  bottom: -3px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
@@ -110,45 +94,23 @@
   color: white;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .navbar {
-    padding: 0.5rem 1.2rem;
-    top: 1rem;
-  }
-
-  .nav-content {
-    gap: 1.5rem;
-  }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
   .navbar {
     padding: 0.4rem 0.6rem;
-    top: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: calc(100% - 1.2rem);
-    max-width: none;
+    width: calc(100% - 1rem);
     border-radius: 25px;
   }
 
   .logo {
-    margin-left: 0; /* centers better on mobile */
-  }
-
-  .nav-content {
-    gap: 1rem;
-    justify-content: flex-start;
-    overflow: hidden;
+    margin-left: 0;
   }
 
   .nav-links {
+    display: flex;
     gap: 0.25rem;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 0.2rem;
+    overflow: hidden; /* prevent manual scroll */
+    flex-wrap: nowrap;
   }
 
   .nav-link {
@@ -157,35 +119,8 @@
   }
 }
 
-@media (max-width: 480px) {
-  .navbar {
-    padding: 0.4rem 0.5rem;
-    border-radius: 20px;
-    top: 0.8rem;
-    width: calc(100% - 1rem);
-    max-width: none;
-  }
-
-  .nav-content {
-    gap: 0.5rem;
-  }
-
-  .nav-links {
-    gap: 0.1rem;
-  }
-
-  .nav-link {
-    padding: 0.35rem 0.65rem;
-    font-size: 0.78rem;
-  }
-}
-
-/* Gradient text animation for logo */
+/* Gradient animation for logo */
 @keyframes gradientWave {
-  0% {
-    background-position: 0% center;
-  }
-  100% {
-    background-position: 200% center;
-  }
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
