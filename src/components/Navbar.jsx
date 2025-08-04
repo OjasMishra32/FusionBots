@@ -39,9 +39,9 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto-scroll nav to active link (mobile only, no manual swipe)
+  // Auto-center the active link
   useEffect(() => {
-    if (window.innerWidth <= 768 && navLinksRef.current) {
+    if (navLinksRef.current) {
       const activeEl = navLinksRef.current.querySelector('.nav-link.active');
       if (activeEl) {
         activeEl.scrollIntoView({
