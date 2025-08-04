@@ -24,7 +24,7 @@
 .nav-content {
   display: flex;
   align-items: center;
-  gap: 1.8rem; /* slightly smaller */
+  gap: 1.8rem;
 }
 
 /* Logo section */
@@ -41,7 +41,7 @@
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.025em;
   animation: gradientWave 4s ease-in-out infinite;
-  margin-left: -0.4rem; /* pulls white background closer to logo */
+  margin-left: -0.8rem; /* pulls white background tighter to logo */
 }
 
 .logo-img {
@@ -166,4 +166,3 @@
     background-position: 200% center;
   }
 }
-
