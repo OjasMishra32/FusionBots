@@ -12,7 +12,7 @@
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   will-change: transform;
-  max-width: 95%;
+  overflow: hidden;
 }
 
 .navbar.scrolled {
@@ -26,7 +26,6 @@
   display: flex;
   align-items: center;
   gap: 1.8rem;
-  width: 100%;
 }
 
 /* Logo section */
@@ -43,42 +42,42 @@
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.025em;
   animation: gradientWave 4s ease-in-out infinite;
-  margin-left: -0.8rem; /* PC hugging effect */
+  margin-left: -0.8rem; /* keeps it hugging white edge on desktop */
 }
 
 .logo-img {
-  height: 56px; 
+  height: 56px;
   width: 56px;
   border-radius: 50%;
   object-fit: cover;
   display: block;
 }
 
-/* Navigation links */
+/* Navigation links container */
 .nav-links {
   display: flex;
   gap: 0.4rem;
   list-style: none;
-  min-width: 0;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none;
   scroll-snap-type: x mandatory;
-  scroll-behavior: smooth;
-}
-.nav-links::-webkit-scrollbar {
-  display: none;
+  scrollbar-width: none; /* hide scrollbar in Firefox */
 }
 
+.nav-links::-webkit-scrollbar {
+  display: none; /* hide scrollbar in Chrome/Safari */
+}
+
+/* Navigation link items */
 .nav-link {
   position: relative;
-  padding: 0.55rem 1rem;
+  padding: 0.55rem 1.1rem;
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 800;
   font-size: 0.9rem;
   line-height: 1.2;
-  border-radius: 999px; /* fully rounded */
+  border-radius: 9999px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: -0.025em;
   white-space: nowrap;
@@ -90,14 +89,14 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: -3px;
+  left: -6px;
+  right: -6px;
+  bottom: -3px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-  border-radius: 999px; /* fixes cut-off */
+  border-radius: 9999px;
   transform: scale(0);
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease;
   z-index: -1;
 }
 
@@ -117,6 +116,7 @@
     padding: 0.5rem 1.2rem;
     top: 1rem;
   }
+
   .nav-content {
     gap: 1.5rem;
   }
@@ -124,25 +124,31 @@
 
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.4rem 0.8rem; /* tighter so logo doesn't get flat */
+    padding: 0.4rem 0.6rem;
     top: 1rem;
     left: 50%;
     transform: translateX(-50%);
-    width: calc(100% - 1rem);
+    width: calc(100% - 1.2rem);
+    max-width: none;
     border-radius: 25px;
   }
 
   .logo {
-    margin-left: 0; /* remove negative margin on mobile */
+    margin-left: 0; /* centers better on mobile */
   }
 
   .nav-content {
-    gap: 0.6rem;
+    gap: 1rem;
     justify-content: flex-start;
+    overflow: hidden;
   }
 
   .nav-links {
-    flex: 1;
+    gap: 0.25rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.2rem;
   }
 
   .nav-link {
@@ -153,14 +159,19 @@
 
 @media (max-width: 480px) {
   .navbar {
-    padding: 0.4rem 0.6rem;
+    padding: 0.4rem 0.5rem;
     border-radius: 20px;
     top: 0.8rem;
-    width: calc(100% - 0.8rem);
+    width: calc(100% - 1rem);
+    max-width: none;
   }
 
   .nav-content {
-    gap: 0.4rem;
+    gap: 0.5rem;
+  }
+
+  .nav-links {
+    gap: 0.1rem;
   }
 
   .nav-link {
@@ -169,7 +180,7 @@
   }
 }
 
-/* Gradient text animation */
+/* Gradient text animation for logo */
 @keyframes gradientWave {
   0% {
     background-position: 0% center;
