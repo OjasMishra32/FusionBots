@@ -24,8 +24,10 @@
   display: flex;
   align-items: center;
   gap: 1.8rem;
+  overflow: visible;
 }
 
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
@@ -48,10 +50,12 @@
   object-fit: cover;
 }
 
+/* Nav links */
 .nav-links {
   display: flex;
   gap: 0.4rem;
   list-style: none;
+  overflow: visible;
 }
 
 .nav-item {
@@ -73,10 +77,10 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -3px;
-  left: -6px;
-  right: -6px;
-  bottom: -3px;
+  top: -2px;
+  left: -4px;
+  right: -4px;
+  bottom: -2px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
@@ -94,7 +98,7 @@
   color: white;
 }
 
-/* Mobile-only: Auto-scroll to active, no manual swipe */
+/* Mobile adjustments */
 @media (max-width: 768px) {
   .navbar {
     padding: 0.4rem 0.6rem;
@@ -108,11 +112,17 @@
 
   .nav-links {
     display: flex;
-    gap: 1.2rem;
-    overflow: hidden; /* prevents manual swipe */
+    gap: 0.8rem;
+    overflow-x: auto; /* allow horizontal swipe */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* hide scrollbar */
+    scroll-snap-type: x mandatory; /* snap each link */
     flex: 1;
-    padding-bottom: 0.4rem;
-    scroll-snap-type: x mandatory;
+    padding-bottom: 0.4rem; /* space for outline */
+  }
+
+  .nav-links::-webkit-scrollbar {
+    display: none;
   }
 
   .nav-link {
