@@ -7,12 +7,11 @@ const Navbar = () => {
   const [activeLink, setActiveLink] = useState('hero');
   const navLinksRef = useRef(null);
 
-  // Track scroll to toggle background & active link
   useEffect(() => {
     const onScroll = () => {
       setIsScrolled(window.scrollY > 100);
 
-      // Highlight current section
+      // Highlight section
       const sections = document.querySelectorAll('section[id]');
       let current = 'hero';
       sections.forEach(sec => {
@@ -24,16 +23,16 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', onScroll);
-    onScroll(); // initial
+    onScroll(); // init
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Center active link
+  // Center the active nav-link
   useEffect(() => {
     const container = navLinksRef.current;
-    const activeEl = container?.querySelector('.nav-link.active');
-    if (activeEl) {
-      activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+    const el = container?.querySelector('.nav-link.active');
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', inline: 'center' });
     }
   }, [activeLink]);
 
@@ -48,7 +47,10 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        <a href="https://fusionbots.myshopify.com/" className="logo">
+        <a
+          href="https://fusionbots.myshopify.com/"
+          className="logo"
+        >
           <img src={logo} alt="FusionBots Logo" className="logo-img" />
           <span>FusionBots</span>
         </a>
