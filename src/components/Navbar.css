@@ -7,10 +7,11 @@
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 40px;
-  padding: 0.3rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  overflow: visible; /* allow pill outside */
 }
 
 .navbar.scrolled {
@@ -56,14 +57,13 @@
   gap: 0.4rem;
   list-style: none;
   overflow: visible;
+  align-items: center;
+  position: relative;
 }
 
 .nav-item {
   scroll-snap-align: center;
-}
-
-.nav-item:first-child {
-  margin-left: -0.2rem; /* bring first link closer to logo */
+  overflow: visible;
 }
 
 .nav-link {
@@ -76,20 +76,23 @@
   border-radius: 9999px;
   transition: all 0.3s ease;
   white-space: nowrap;
+  overflow: visible;
+  z-index: 2;
 }
 
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -4px;    /* increased from -2px */
-  left: -8px;   /* increased from -4px */
-  right: -8px;  /* increased from -4px */
-  bottom: -4px; /* increased from -2px */
+  top: -8px;
+  left: -14px;
+  right: -14px;
+  bottom: -8px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
   transition: transform 0.25s ease;
-  z-index: -1;
+  z-index: 9999; /* ABOVE navbar */
+  pointer-events: none;
 }
 
 .nav-link:hover::before,
@@ -105,7 +108,7 @@
 /* Mobile adjustments */
 @media (max-width: 768px) {
   .navbar {
-    padding: 0.4rem 0.6rem;
+    padding: 0.6rem 0.6rem;
     width: calc(100% - 1rem);
     border-radius: 25px;
   }
@@ -117,20 +120,17 @@
   .nav-links {
     display: flex;
     gap: 0.8rem;
-    overflow-x: auto; /* allow horizontal swipe */
+    overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* hide scrollbar */
-    scroll-snap-type: x mandatory; /* snap each link */
+    scrollbar-width: none;
+    scroll-snap-type: x mandatory;
     flex: 1;
-    padding-bottom: 0.4rem; /* space for outline */
+    padding-bottom: 0.5rem;
+    overflow: visible;
   }
 
   .nav-links::-webkit-scrollbar {
     display: none;
-  }
-
-  .nav-item:first-child {
-    margin-left: 0; /* align first link flush with edge */
   }
 
   .nav-link {
