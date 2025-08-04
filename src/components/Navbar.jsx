@@ -39,15 +39,18 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Automatically scroll to active link
+  // Auto-scroll nav to active link (mobile only, no manual swipe)
   useEffect(() => {
-    if (navLinksRef.current) {
+    if (window.innerWidth <= 768 && navLinksRef.current) {
       const activeEl = navLinksRef.current.querySelector('.nav-link.active');
       if (activeEl) {
-        activeEl.scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-          block: 'nearest'
+        const container = navLinksRef.current;
+        const targetScroll =
+          activeEl.offsetLeft - container.clientWidth / 2 + activeEl.clientWidth / 2;
+
+        container.scrollTo({
+          left: targetScroll,
+          behavior: 'smooth'
         });
       }
     }
@@ -71,7 +74,7 @@ const Navbar = () => {
 
         <ul className="nav-links" ref={navLinksRef}>
           {navLinks.map(({ href, label }) => (
-            <li key={href}>
+            <li key={href} className="nav-item">
               <a
                 href={href}
                 className={`nav-link ${activeLink === href.substring(1) ? 'active' : ''}`}
