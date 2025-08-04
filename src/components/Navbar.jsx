@@ -33,10 +33,22 @@ const Navbar = () => {
     };
 
     window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Auto-scroll active link into center
+  useEffect(() => {
+    const activeEl = document.querySelector('.nav-link.active');
+    if (activeEl) {
+      activeEl.scrollIntoView({
+        behavior: 'smooth',
+        inline: 'center',
+        block: 'nearest'
+      });
+    }
+  }, [activeLink]);
 
   const navLinks = [
     { href: '#hero', label: 'Home' },
@@ -49,13 +61,7 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        {/* Clickable logo and text */}
-        <a
-          href="https://fusionbots.myshopify.com/"
-          className="logo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <a href="https://fusionbots.myshopify.com" target="_blank" rel="noopener noreferrer" className="logo">
           <img src={logo} alt="FusionBots Logo" className="logo-img" />
           <span>FusionBots</span>
         </a>
