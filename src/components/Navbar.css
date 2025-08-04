@@ -73,10 +73,10 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -4px;
-  left: -8px;
-  right: -8px;
-  bottom: -4px;
+  top: -3px;
+  left: -6px;
+  right: -6px;
+  bottom: -3px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
@@ -108,14 +108,15 @@
 
   .nav-links {
     display: flex;
-    gap: 1.4rem;
-    overflow-x: hidden; /* stops manual swiping */
+    gap: 1.2rem;
+    overflow: hidden; /* prevents manual swipe */
     flex: 1;
+    padding-bottom: 0.4rem;
     scroll-snap-type: x mandatory;
   }
 
   .nav-link {
-    padding: 0.55rem 1rem;
+    padding: 0.5rem 1rem;
     font-size: 0.85rem;
   }
 }
