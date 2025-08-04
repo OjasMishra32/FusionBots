@@ -7,21 +7,23 @@
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 40px;
-  padding: 0.3rem 0.8rem;
+  padding: 0.3rem 1.2rem;
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  width: fit-content;
-  max-width: 95%;
-  overflow: hidden;
+}
+
+.navbar.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px) saturate(180%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .nav-content {
   display: flex;
   align-items: center;
-  gap: 0.4rem;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
+  gap: 1.8rem;
 }
 
 .logo {
@@ -35,64 +37,90 @@
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: -0.025em;
-  margin-left: 0.5rem;
+  animation: gradientWave 4s ease-in-out infinite;
+  margin-left: -0.8rem;
 }
 
 .logo-img {
-  height: 44px;
-  width: 44px;
+  height: 56px;
+  width: 56px;
   border-radius: 50%;
   object-fit: cover;
-  display: block;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.4rem;
+  list-style: none;
+}
+
+.nav-item {
+  scroll-snap-align: center;
 }
 
 .nav-link {
   position: relative;
-  padding: 0.55rem 1rem;
+  padding: 0.55rem 1.1rem;
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 800;
   font-size: 0.9rem;
-  line-height: 1.2;
-  border-radius: 25px;
+  border-radius: 9999px;
   transition: all 0.3s ease;
-  letter-spacing: -0.025em;
   white-space: nowrap;
 }
 
-.nav-link.active {
+.nav-link::before {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: -8px;
+  right: -8px;
+  bottom: -4px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  border-radius: 9999px;
+  transform: scale(0);
+  transition: transform 0.25s ease;
+  z-index: -1;
+}
+
+.nav-link:hover::before,
+.nav-link.active::before {
+  transform: scale(1);
+}
+
+.nav-link:hover,
+.nav-link.active {
   color: white;
 }
 
-/* Keep pill shape fully visible */
-.nav-link.active::before {
-  border-radius: 25px;
-}
-
+/* Mobile-only: Auto-scroll to active, no manual swipe */
 @media (max-width: 768px) {
   .navbar {
-    top: 0.8rem;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 0.3rem 0.5rem;
-    max-width: 90%;
-    border-radius: 40px;
-  }
-
-  .nav-content {
-    overflow-x: hidden;
-    flex-wrap: nowrap;
-  }
-
-  .nav-link {
-    flex: 0 0 auto;
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
+    padding: 0.4rem 0.6rem;
+    width: calc(100% - 1rem);
+    border-radius: 25px;
   }
 
   .logo {
-    margin-left: 0.2rem;
+    margin-left: 0;
   }
+
+  .nav-links {
+    display: flex;
+    gap: 1.4rem;
+    overflow-x: hidden; /* stops manual swiping */
+    flex: 1;
+    scroll-snap-type: x mandatory;
+  }
+
+  .nav-link {
+    padding: 0.55rem 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+@keyframes gradientWave {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
 }
