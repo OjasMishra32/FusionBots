@@ -11,7 +11,7 @@
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  overflow: visible; /* allow pill outside */
+  overflow: visible;
 }
 
 .navbar.scrolled {
@@ -56,9 +56,9 @@
   display: flex;
   gap: 0.4rem;
   list-style: none;
-  overflow: visible;
   align-items: center;
   position: relative;
+  overflow: visible;
 }
 
 .nav-item {
@@ -76,8 +76,7 @@
   border-radius: 9999px;
   transition: all 0.3s ease;
   white-space: nowrap;
-  overflow: visible;
-  z-index: 2;
+  z-index: 1; /* make sure text is above the pill */
 }
 
 .nav-link::before {
@@ -91,8 +90,7 @@
   border-radius: 9999px;
   transform: scale(0);
   transition: transform 0.25s ease;
-  z-index: 9999; /* ABOVE navbar */
-  pointer-events: none;
+  z-index: -1; /* behind the text */
 }
 
 .nav-link:hover::before,
@@ -120,13 +118,12 @@
   .nav-links {
     display: flex;
     gap: 0.8rem;
-    overflow-x: auto;
+    overflow-x: auto; /* re-add scroll */
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     flex: 1;
     padding-bottom: 0.5rem;
-    overflow: visible;
   }
 
   .nav-links::-webkit-scrollbar {
