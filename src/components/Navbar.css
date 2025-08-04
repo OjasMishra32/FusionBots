@@ -1,4 +1,4 @@
-.navbar {  
+.navbar {
   position: fixed;
   top: 1.5rem;
   left: 50%;
@@ -6,14 +6,13 @@
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50vw;
+  border-radius: 40px;
   padding: 0.3rem 1.2rem;
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   will-change: transform;
-  max-width: 95vw;
-  overflow: hidden; /* important for slider effect */
+  max-width: 95%;
 }
 
 .navbar.scrolled {
@@ -27,10 +26,10 @@
   display: flex;
   align-items: center;
   gap: 1.8rem;
-  min-width: 0;
+  width: 100%;
 }
 
-/* Logo section (hug left edge on desktop) */
+/* Logo section */
 .logo {
   display: flex;
   align-items: center;
@@ -44,8 +43,7 @@
   -webkit-text-fill-color: transparent;
   letter-spacing: -0.025em;
   animation: gradientWave 4s ease-in-out infinite;
-  margin-left: -1rem; /* Hug left */
-  flex-shrink: 0;
+  margin-left: -0.8rem; /* Hug white bar */
 }
 
 .logo-img {
@@ -62,12 +60,13 @@
   gap: 0.4rem;
   list-style: none;
   min-width: 0;
-  overflow-x: auto; /* horizontal scrolling for mobile */
+  overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* hide scrollbar Firefox */
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
 }
 .nav-links::-webkit-scrollbar {
-  display: none; /* hide scrollbar Chrome/Safari */
+  display: none;
 }
 
 .nav-link {
@@ -81,28 +80,29 @@
   border-radius: 25px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: -0.025em;
-  white-space: nowrap; /* keep text in one line */
-  flex-shrink: 0; /* prevent squishing text */
+  white-space: nowrap;
+  flex-shrink: 0;
+  scroll-snap-align: center;
+  z-index: 1;
 }
 
 .nav-link::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
+  top: 0; /* Fix cut-off issue */
+  left: 0;
+  width: 100%;
+  height: 100%;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 25px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translate(-50%, -50%);
+  transform: scale(0);
+  transition: transform 0.3s ease;
   z-index: -1;
 }
 
 .nav-link:hover::before,
 .nav-link.active::before {
-  width: 100%;
-  height: 100%;
+  transform: scale(1);
 }
 
 .nav-link:hover,
@@ -110,40 +110,59 @@
   color: white;
 }
 
-/* Tablet adjustments */
+/* Responsive Design */
 @media (max-width: 1024px) {
   .navbar {
-    padding: 0.4rem 1rem;
+    padding: 0.5rem 1.2rem;
+    top: 1rem;
   }
+
+  .nav-content {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0.4rem 1rem;
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 1rem);
+    border-radius: 25px;
+  }
+
   .nav-content {
     gap: 1rem;
+    justify-content: space-between;
   }
-}
 
-/* Mobile adjustments */
-@media (max-width: 768px) {
-  .logo {
-    margin-left: -0.5rem; /* keep slight edge hug */
-  }
   .nav-links {
-    gap: 0.3rem;
+    flex: 1;
+    justify-content: flex-start;
   }
+
   .nav-link {
-    font-size: 0.85rem;
     padding: 0.45rem 0.85rem;
+    font-size: 0.85rem;
   }
 }
 
-@media (max-width: 500px) {
-  .logo {
-    margin-left: 0; /* prevent squish */
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    top: 0.8rem;
+    width: calc(100% - 1rem);
   }
-  .nav-links {
-    gap: 0.25rem;
+
+  .nav-content {
+    gap: 0.5rem;
   }
+
   .nav-link {
-    font-size: 0.78rem;
     padding: 0.35rem 0.65rem;
+    font-size: 0.78rem;
   }
 }
 
