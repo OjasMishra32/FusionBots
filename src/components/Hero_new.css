@@ -181,8 +181,9 @@
   margin-bottom: 1.5rem;
   letter-spacing: -0.025em;
   position: relative;
+  overflow: hidden; /* keeps shimmer aligned */
 
-  /* Main wave gradient: Dark shiny blue to black */
+  /* Continuous dark blue → black wave animation */
   background: linear-gradient(
     90deg,
     #002147,
@@ -196,30 +197,30 @@
   color: transparent;
   -webkit-text-fill-color: transparent;
 
-  /* Continuous wave + shimmer overlay */
   animation: gradientWave 6s linear infinite;
 }
 
+/* Shiny metallic streak across the whole screen */
 .glow-text::after {
-  /* Metallic shimmer overlay */
   content: '';
   position: absolute;
   top: 0;
-  left: -150%;
-  width: 150%;
+  left: -100vw; /* start shimmer way off-screen */
+  width: 300vw; /* extra wide so it covers full screen sweep */
   height: 100%;
   background: linear-gradient(
     120deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.4) 30%,
-    transparent 60%
+    rgba(255, 255, 255, 0.4) 15%,
+    transparent 30%
   );
   background-repeat: no-repeat;
   transform: skewX(-20deg);
-  animation: shimmer 3s linear infinite;
+  pointer-events: none;
+  animation: shimmer 4s linear infinite;
 }
 
-/* Smooth continuous gradient wave */
+/* Smooth color wave */
 @keyframes gradientWave {
   0% {
     background-position: 0% center;
@@ -229,18 +230,15 @@
   }
 }
 
-/* Shimmer pass animation */
+/* Shimmer sweep across whole screen */
 @keyframes shimmer {
   0% {
-    left: -150%;
+    left: -100vw;
   }
   100% {
-    left: 150%;
+    left: 100vw;
   }
 }
-
-
-
 
 
 
