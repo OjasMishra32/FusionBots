@@ -55,7 +55,7 @@
   display: flex;
   gap: 0.4rem;
   list-style: none;
-  overflow: visible; /* no clipping */
+  overflow: visible; /* allows blue pill to show fully */
 }
 
 .nav-link {
@@ -73,10 +73,10 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -2px;
+  left: -4px;
+  right: -4px;
+  bottom: -2px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
@@ -108,13 +108,14 @@
 
   .nav-links {
     display: flex;
-    gap: 0.25rem;
-    overflow: hidden; /* prevent manual scroll */
-    flex-wrap: nowrap;
+    gap: 0.5rem; /* slightly more compact spacing */
+    overflow: visible; /* ensure pill shows */
+    justify-content: space-between;
+    flex: 1;
   }
 
   .nav-link {
-    padding: 0.45rem 0.85rem;
+    padding: 0.5rem 0.9rem; /* tighter padding */
     font-size: 0.85rem;
   }
 }
