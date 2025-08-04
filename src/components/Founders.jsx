@@ -40,7 +40,7 @@ const Founders = () => {
      gradient: 'linear-gradient(135deg, #ff77c6, #00d4ff)'
    },
    {
-     name: 'Leo XXXXXXX',
+     name: 'Leo Shi',
      role: 'Co-Founder & Head of Engineering',
      background: 'Leads financial strategy, budgeting, and risk management. Pursuing a degree in Finance from the Stern School of Business with a strong foundation in finance, accounting, and data analysis.',
      image: Leo,

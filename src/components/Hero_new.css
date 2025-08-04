@@ -174,17 +174,33 @@
  animation: glow 2s ease-in-out infinite alternate;
 }
 
-
 .glow-text {
- font-size: clamp(2.5rem, 5vw, 4rem);
- font-weight: 800;
- line-height: 1.1;
- margin-bottom: 1.5rem;
- background: linear-gradient(135deg, var(--white) 0%, var(--gray-300) 100%);
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- background-clip: text;
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.025em;
+
+  background: linear-gradient(
+    90deg,
+    #3a3a3a 0%,    /* Dark gray */
+    #000000 50%,   /* Pure black */
+    #3a3a3a 100%   /* Back to dark gray */
+  );
+  background-size: 300% 100%;
+  background-position: 0% center;
+
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  animation: slideUp 0.8s ease-out 0.4s forwards, gradientWave 10s ease-in-out infinite;
+  opacity: 0;
 }
+
+
+
 
 
 .hero-subtitle {
@@ -567,5 +583,20 @@
  }
 }
 
-
-
+@keyframes gradientWave {
+  0% {
+    background-position: 0% center;
+  }
+  25% {
+    background-position: 50% center;
+  }
+  50% {
+    background-position: 100% center;
+  }
+  75% {
+    background-position: 50% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}

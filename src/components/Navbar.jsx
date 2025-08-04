@@ -60,9 +60,10 @@ const Navbar = () => {
    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
      <div className="nav-content">
        <div className="logo">
-         <img src={logo} alt="FusionBots Logo" className="logo-img" />
-         <span>FusionBots</span>
-       </div>
+        <img src={logo} alt="FusionBots Logo" className="logo-img" />
+        <span>FusionBots</span>
+        </div>
+
        <ul className="nav-links">
          {navLinks.map(({ href, label }) => (
            <li key={href}>

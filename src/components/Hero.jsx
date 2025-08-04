@@ -83,7 +83,7 @@ const Hero = () => {
        </div>
 
 
-       <h1 className="glow-logo">FusionBots</h1>
+       <h1 className="glow-text">FusionBots</h1>
 
 
        <p className="hero-subtitle">
