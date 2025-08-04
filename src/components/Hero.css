@@ -3,11 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  text-align: center;
   padding: 0 2rem;
   position: relative;
   overflow: hidden;
-  background: radial-gradient(ellipse at center, var(--gray-50) 0%, var(--white) 70%);
+  background: radial-gradient(ellipse at center, #f8fbff 0%, #f0f7ff 50%, #ffffff 100%);
 }
 
 .hero::before {
@@ -17,9 +16,10 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
-              radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%);
+  background: radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.08) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(168, 85, 247, 0.06) 0%, transparent 50%),
+              radial-gradient(circle at 40% 80%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+              radial-gradient(ellipse at center, rgba(135, 206, 250, 0.05) 0%, transparent 60%);
   pointer-events: none;
   z-index: 1;
 }
@@ -111,8 +111,20 @@
   animation: particleFloat 15s linear infinite;
 }
 
+/* Hero Container for Layout */
+.hero-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+  width: 100%;
+  max-width: 1400px;
+  z-index: 10;
+  position: relative;
+}
+
 .hero-content {
-  max-width: 900px;
+  text-align: center;
   z-index: 10;
   position: relative;
 }
@@ -233,5 +245,232 @@
 @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
   .hero-grid {
     background-size: 25px 25px;
+  }
+}
+
+/* Hero Visual Section - Robot Dog */
+.hero-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+.fusion-bot-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 400px;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.fusion-bot-image {
+  width: 100%;
+  max-width: 350px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.12));
+  animation: robotFloat 6s ease-in-out infinite;
+  transition: transform 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.fusion-bot-image:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+/* Glowing effect behind the robot */
+.bot-glow-effect {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(102, 126, 234, 0.2) 0%,
+    rgba(168, 85, 247, 0.15) 25%,
+    rgba(59, 130, 246, 0.1) 50%,
+    transparent 70%
+  );
+  border-radius: 50%;
+  animation: glowPulse 4s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* Floating particles around the robot */
+.bot-floating-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.bot-particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 50%;
+  opacity: 0.7;
+  animation: botParticleFloat 8s linear infinite;
+}
+
+.bot-particle:nth-child(1) {
+  top: 20%;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 6s;
+}
+
+.bot-particle:nth-child(2) {
+  top: 60%;
+  right: 15%;
+  animation-delay: 1.5s;
+  animation-duration: 7s;
+}
+
+.bot-particle:nth-child(3) {
+  bottom: 30%;
+  left: 20%;
+  animation-delay: 3s;
+  animation-duration: 5s;
+}
+
+.bot-particle:nth-child(4) {
+  top: 40%;
+  right: 5%;
+  animation-delay: 4.5s;
+  animation-duration: 8s;
+}
+
+.bot-particle:nth-child(5) {
+  bottom: 20%;
+  right: 30%;
+  animation-delay: 2s;
+  animation-duration: 6.5s;
+}
+
+/* Animations */
+@keyframes robotFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-15px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(-5px) rotate(-1deg);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+@keyframes botParticleFloat {
+  0% {
+    transform: translateY(0px) translateX(0px) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  90% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(-100px) translateX(20px) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Desktop Layout */
+@media (min-width: 1024px) {
+  .hero-container {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  
+  .hero-content {
+    text-align: left;
+    max-width: none;
+    padding-left: 1rem;
+  }
+  
+  .hero-cta {
+    justify-content: flex-start;
+    margin-left: 1rem;
+  }
+  
+  .fusion-bot-container {
+    max-width: 500px;
+    margin-top: 3rem;
+  }
+  
+  .fusion-bot-image {
+    max-width: 450px;
+  }
+}
+
+/* Tablet adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-container {
+    gap: 2rem;
+  }
+  
+  .fusion-bot-container {
+    max-width: 320px;
+    margin-top: 1.5rem;
+  }
+  
+  .fusion-bot-image {
+    max-width: 300px;
+  }
+}
+
+/* Mobile optimizations */
+@media (max-width: 767px) {
+  .hero-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .hero-content {
+    order: 1;
+  }
+  
+  .hero-visual {
+    order: 2;
+  }
+  
+  .fusion-bot-container {
+    max-width: 250px;
+    margin: 1rem auto 0;
+  }
+  
+  .fusion-bot-image {
+    max-width: 230px;
+  }
+  
+  .bot-particle {
+    width: 6px;
+    height: 6px;
   }
 }

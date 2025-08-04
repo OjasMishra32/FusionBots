@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import './Hero.css';
 import './Hero_new.css';
+import fusionBotDog from '../assets/dog.png';
 
 const Hero = () => {
   const particlesRef = useRef(null);
@@ -65,29 +66,45 @@ const Hero = () => {
 
       <div className="particles" ref={particlesRef}></div>
 
-      <div className="hero-content">
-        <div className="hero-badge">
-          <span>Empowering Young Innovators</span>
+      <div className="hero-container">
+        <div className="hero-content">
+          <div className="hero-badge">
+            <span>Empowering Young Innovators</span>
+          </div>
+
+          {/* Cool animated text */}
+          <h1 className="glow-text">FusionBots</h1>
+
+          <p className="hero-subtitle">
+            FusionBots was founded to make STEM education accessible and affordable for all students.
+            By offering rugged robotics kits and innovative tech gadgets, we combine practical learning with business sustainability — using every product sold to fuel our mission of inspiring the next generation of builders, coders, and problem-solvers.
+          </p>
+
+          <div className="hero-cta">
+            <a
+              href="https://fusionbots.myshopify.com"
+              className="btn btn-primary"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              🛒 Shop STEM Kits
+            </a>
+            <a href="#about" className="btn btn-secondary">Learn More</a>
+          </div>
         </div>
 
-        {/* Cool animated text */}
-        <h1 className="glow-text">FusionBots</h1>
-
-        <p className="hero-subtitle">
-          FusionBots was founded to make STEM education accessible and affordable for all students.
-          By offering rugged robotics kits and innovative tech gadgets, we combine practical learning with business sustainability — using every product sold to fuel our mission of inspiring the next generation of builders, coders, and problem-solvers.
-        </p>
-
-        <div className="hero-cta">
-          <a
-            href="https://fusionbots.myshopify.com"
-            className="btn btn-primary"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            🛒 Shop STEM Kits
-          </a>
-          <a href="#about" className="btn btn-secondary">Learn More</a>
+        <div className="hero-visual">
+          <div className="fusion-bot-container">
+            <div className="bot-glow-effect"></div>
+            <img src={fusionBotDog} alt="FusionBot Robot Dog" className="fusion-bot-image" />
+            <div className="bot-floating-particles">
+              <div className="bot-particle"></div>
+              <div className="bot-particle"></div>
+              <div className="bot-particle"></div>
+              <div className="bot-particle"></div>
+              <div className="bot-particle"></div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
