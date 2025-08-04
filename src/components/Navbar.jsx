@@ -38,7 +38,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto-scroll active link into center
+  // Auto-scroll active link into full view (snap effect)
   useEffect(() => {
     const activeEl = document.querySelector('.nav-link.active');
     if (activeEl) {
