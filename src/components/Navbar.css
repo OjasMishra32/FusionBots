@@ -7,7 +7,7 @@
   backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 40px;
-  padding: 0.6rem 1.4rem 0.6rem 0.4rem; /* reduced left padding */
+  padding: 0.4rem 1.4rem 0.4rem 0.6rem; /* reduced height + left padding */
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -29,7 +29,7 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem; /* increased slightly to prevent overlap */
   font-size: 1rem;
   font-weight: 900;
   background: linear-gradient(90deg, #0000FF, #000000, #0000FF);
@@ -40,8 +40,8 @@
 }
 
 .logo-img {
-  height: 56px;
-  width: 56px;
+  height: 50px; /* slightly smaller to match snug height */
+  width: 50px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -49,13 +49,13 @@
 /* Desktop nav links */
 .nav-links {
   display: flex;
-  gap: 1rem;
+  gap: 1rem; /* keeps spacing balanced */
   list-style: none;
 }
 
 .nav-link {
   position: relative;
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem 0.85rem; /* adjusted for smaller navbar height */
   color: var(--gray-700);
   text-decoration: none;
   font-weight: 800;
@@ -164,9 +164,6 @@
 
 /* Mobile view */
 @media (max-width: 768px) {
-  .navbar {
-    padding: 0.6rem 1.2rem; /* restore normal padding on mobile */
-  }
   .nav-links {
     display: none;
   }
