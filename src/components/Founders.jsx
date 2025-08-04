@@ -41,7 +41,7 @@ const Founders = () => {
    },
    {
      name: 'Leo Shi',
-     role: 'Co-Founder & Head of Engineering',
+     role: 'Co-Founder & CFO',
      background: 'Leads financial strategy, budgeting, and risk management. Pursuing a degree in Finance from the Stern School of Business with a strong foundation in finance, accounting, and data analysis.',
      image: Leo,
      expertise: 'Finance • Accounting • Data Analysis',
