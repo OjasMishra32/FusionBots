@@ -39,7 +39,7 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto-center the active link
+  // Auto-center the active link on scroll
   useEffect(() => {
     if (navLinksRef.current) {
       const activeEl = navLinksRef.current.querySelector('.nav-link.active');
@@ -64,10 +64,11 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        <div className="logo">
+        {/* Clickable logo and brand name */}
+        <a href="https://fusionbots.myshopify.com/" className="logo">
           <img src={logo} alt="FusionBots Logo" className="logo-img" />
           <span>FusionBots</span>
-        </div>
+        </a>
 
         <ul className="nav-links" ref={navLinksRef}>
           {navLinks.map(({ href, label }) => (
