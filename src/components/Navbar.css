@@ -10,13 +10,13 @@
   padding: 0.6rem 1.2rem;
   z-index: 1000;
   box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-  overflow: visible; /* Allow pills to overflow */
+  overflow: visible; /* allow pill to overflow */
 }
 
 .navbar.scrolled {
   background: rgba(255,255,255,0.95);
-  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
   border-color: rgba(255,255,255,0.4);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
 }
 
 .nav-content {
@@ -55,7 +55,7 @@
   gap: 0.4rem;
   list-style: none;
   align-items: center;
-  overflow: visible; /* allow overflow vertically */
+  overflow: visible;
 }
 
 .nav-item {
@@ -71,21 +71,22 @@
   font-size: 0.9rem;
   border-radius: 9999px;
   white-space: nowrap;
-  z-index: 1; /* above the pill */
+  z-index: 2; /* text above pill */
+  transition: color 0.25s ease;
 }
 
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -8px;    /* extra room above */
-  left: -14px;  /* extra room left */
-  right: -14px; /* extra room right */
-  bottom: -8px; /* extra room below */
+  top: -8px;
+  left: -14px;
+  right: -14px;
+  bottom: -8px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
   transition: transform 0.25s ease;
-  z-index: 0;  /* behind the link text but above navbar */
+  z-index: 1; /* pill behind text but above navbar */
 }
 
 .nav-link:hover::before,
@@ -105,15 +106,17 @@
     width: calc(100% - 1rem);
     border-radius: 25px;
   }
-  .logo { margin-left: 0; }
+  .logo {
+    margin-left: 0;
+  }
   .nav-links {
     gap: 0.8rem;
-    overflow-x: auto;            /* allow horizontal swipe */
+    overflow-x: auto;               /* horizontal swipe */
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
     flex: 1;
-    padding-bottom: 0.5rem;       /* room for pills */
+    padding-bottom: 0.5rem;         /* room for pill */
   }
   .nav-links::-webkit-scrollbar {
     display: none;
@@ -128,4 +131,5 @@
   0% { background-position: 0% center; }
   100% { background-position: 200% center; }
 }
+
 
