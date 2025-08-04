@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import './Navbar.css';
 import logo from '../assets/fusionbots-logo.jpeg';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState('hero');
+  const navLinksRef = useRef(null);
 
   useEffect(() => {
     const updateNavbar = () => {
@@ -38,15 +39,17 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Auto-scroll active link into full view (snap effect)
+  // Automatically scroll to active link
   useEffect(() => {
-    const activeEl = document.querySelector('.nav-link.active');
-    if (activeEl) {
-      activeEl.scrollIntoView({
-        behavior: 'smooth',
-        inline: 'center',
-        block: 'nearest'
-      });
+    if (navLinksRef.current) {
+      const activeEl = navLinksRef.current.querySelector('.nav-link.active');
+      if (activeEl) {
+        activeEl.scrollIntoView({
+          behavior: 'smooth',
+          inline: 'center',
+          block: 'nearest'
+        });
+      }
     }
   }, [activeLink]);
 
@@ -61,12 +64,12 @@ const Navbar = () => {
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        <a href="https://fusionbots.myshopify.com" target="_blank" rel="noopener noreferrer" className="logo">
+        <div className="logo">
           <img src={logo} alt="FusionBots Logo" className="logo-img" />
           <span>FusionBots</span>
-        </a>
+        </div>
 
-        <ul className="nav-links">
+        <ul className="nav-links" ref={navLinksRef}>
           {navLinks.map(({ href, label }) => (
             <li key={href}>
               <a
