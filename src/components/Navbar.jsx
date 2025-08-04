@@ -42,7 +42,7 @@ const Navbar = () => {
     { href: '#hero', label: 'Home' },
     { href: '#about', label: 'About' },
     { href: '#products', label: 'Products' },
-    { href: '#founders', label: 'Team' },
+    { href: '#founders', label: 'Founders' },
     { href: '#contact', label: 'Contact' },
   ];
 
