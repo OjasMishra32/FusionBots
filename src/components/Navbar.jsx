@@ -7,75 +7,57 @@ const Navbar = () => {
   const [activeLink, setActiveLink] = useState('hero');
   const navLinksRef = useRef(null);
 
+  // Track scroll to toggle background & active link
   useEffect(() => {
-    const updateNavbar = () => {
-      setIsScrolled(window.pageYOffset > 100);
-    };
+    const onScroll = () => {
+      setIsScrolled(window.scrollY > 100);
 
-    const updateActiveNavLink = () => {
+      // Highlight current section
       const sections = document.querySelectorAll('section[id]');
-      let current = '';
-
-      sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
-        if (sectionTop <= 150) {
-          current = section.getAttribute('id');
+      let current = 'hero';
+      sections.forEach(sec => {
+        if (sec.getBoundingClientRect().top <= 150) {
+          current = sec.id;
         }
       });
-
-      if (current) {
-        setActiveLink(current);
-      }
+      setActiveLink(current);
     };
 
-    const handleScroll = () => {
-      updateNavbar();
-      updateActiveNavLink();
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', onScroll);
+    onScroll(); // initial
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Auto-center the active link on scroll
+  // Center active link
   useEffect(() => {
-    if (navLinksRef.current) {
-      const activeEl = navLinksRef.current.querySelector('.nav-link.active');
-      if (activeEl) {
-        activeEl.scrollIntoView({
-          behavior: 'smooth',
-          inline: 'center',
-          block: 'nearest'
-        });
-      }
+    const container = navLinksRef.current;
+    const activeEl = container?.querySelector('.nav-link.active');
+    if (activeEl) {
+      activeEl.scrollIntoView({ behavior: 'smooth', inline: 'center' });
     }
   }, [activeLink]);
 
-  const navLinks = [
-    { href: '#hero', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#products', label: 'Products' },
-    { href: '#founders', label: 'Founders' },
-    { href: '#contact', label: 'Contact' },
+  const links = [
+    { href: '#hero',    label: 'Home'     },
+    { href: '#about',   label: 'About'    },
+    { href: '#products',label: 'Products' },
+    { href: '#founders',label: 'Founders' },
+    { href: '#contact', label: 'Contact'  },
   ];
 
   return (
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="nav-content">
-        {/* Clickable logo and brand name */}
         <a href="https://fusionbots.myshopify.com/" className="logo">
           <img src={logo} alt="FusionBots Logo" className="logo-img" />
           <span>FusionBots</span>
         </a>
-
         <ul className="nav-links" ref={navLinksRef}>
-          {navLinks.map(({ href, label }) => (
+          {links.map(({ href, label }) => (
             <li key={href} className="nav-item">
               <a
                 href={href}
-                className={`nav-link ${activeLink === href.substring(1) ? 'active' : ''}`}
+                className={`nav-link ${activeLink === href.slice(1) ? 'active' : ''}`}
               >
                 {label}
               </a>
