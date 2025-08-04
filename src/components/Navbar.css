@@ -11,7 +11,6 @@
   z-index: 1000;
   transition: all 0.3s ease;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  overflow: visible;
 }
 
 .navbar.scrolled {
@@ -25,7 +24,6 @@
   display: flex;
   align-items: center;
   gap: 1.8rem;
-  overflow: visible;
 }
 
 /* Logo */
@@ -42,6 +40,7 @@
   -webkit-text-fill-color: transparent;
   animation: gradientWave 4s ease-in-out infinite;
   margin-left: -0.8rem;
+  text-decoration: none;
 }
 
 .logo-img {
@@ -58,12 +57,10 @@
   list-style: none;
   align-items: center;
   position: relative;
-  overflow: visible;
 }
 
 .nav-item {
   scroll-snap-align: center;
-  overflow: visible;
 }
 
 .nav-link {
@@ -76,7 +73,7 @@
   border-radius: 9999px;
   transition: all 0.3s ease;
   white-space: nowrap;
-  z-index: 1; /* make sure text is above the pill */
+  z-index: 2; /* make sure text is above pill */
 }
 
 .nav-link::before {
@@ -90,7 +87,7 @@
   border-radius: 9999px;
   transform: scale(0);
   transition: transform 0.25s ease;
-  z-index: -1; /* behind the text */
+  z-index: 1; /* pill above navbar background but below text */
 }
 
 .nav-link:hover::before,
@@ -101,6 +98,13 @@
 .nav-link:hover,
 .nav-link.active {
   color: white;
+}
+
+/* Make sure pill is not clipped */
+.nav-links,
+.nav-item,
+.nav-link {
+  overflow: visible;
 }
 
 /* Mobile adjustments */
@@ -118,7 +122,7 @@
   .nav-links {
     display: flex;
     gap: 0.8rem;
-    overflow-x: auto; /* re-add scroll */
+    overflow-x: auto; /* allow swipe */
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     scroll-snap-type: x mandatory;
