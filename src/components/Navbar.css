@@ -77,10 +77,10 @@
 .nav-link::before {
   content: '';
   position: absolute;
-  top: -2px;
-  left: -4px;
-  right: -4px;
-  bottom: -2px;
+  top: -4px;   /* increased to give breathing room */
+  left: -8px;  /* increased so pill isn't clipped horizontally */
+  right: -8px;
+  bottom: -4px;
   background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
   border-radius: 9999px;
   transform: scale(0);
@@ -118,7 +118,7 @@
     scrollbar-width: none; /* hide scrollbar */
     scroll-snap-type: x mandatory; /* snap each link */
     flex: 1;
-    padding-bottom: 0.4rem; /* space for outline */
+    padding: 0.5rem 0; /* top/bottom padding so outline isn’t clipped */
   }
 
   .nav-links::-webkit-scrollbar {
@@ -126,7 +126,7 @@
   }
 
   .nav-link {
-    padding: 0.5rem 1rem;
+    padding: 0.55rem 1.1rem; /* keep enough padding for pill */
     font-size: 0.85rem;
   }
 }
