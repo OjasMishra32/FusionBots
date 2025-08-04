@@ -180,14 +180,15 @@
   line-height: 1.1;
   margin-bottom: 1.5rem;
   letter-spacing: -0.025em;
+  position: relative;
 
-  /* Dark shiny blue to black gradient */
+  /* Main wave gradient: Dark shiny blue to black */
   background: linear-gradient(
     90deg,
-    #002147,  /* Dark navy blue */
-    #000000,  /* Black */
-    #002147,  /* Dark navy blue again */
-    #000000   /* Black again */
+    #002147,
+    #000000,
+    #002147,
+    #000000
   );
   background-size: 300% 100%;
   background-clip: text;
@@ -195,16 +196,46 @@
   color: transparent;
   -webkit-text-fill-color: transparent;
 
-  /* Continuous wave animation */
-  animation: gradientWave 5s ease-in-out infinite;
+  /* Continuous wave + shimmer overlay */
+  animation: gradientWave 6s linear infinite;
 }
 
+.glow-text::after {
+  /* Metallic shimmer overlay */
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 30%,
+    transparent 60%
+  );
+  background-repeat: no-repeat;
+  transform: skewX(-20deg);
+  animation: shimmer 3s linear infinite;
+}
+
+/* Smooth continuous gradient wave */
 @keyframes gradientWave {
   0% {
     background-position: 0% center;
   }
   100% {
     background-position: 300% center;
+  }
+}
+
+/* Shimmer pass animation */
+@keyframes shimmer {
+  0% {
+    left: -150%;
+  }
+  100% {
+    left: 150%;
   }
 }
 
