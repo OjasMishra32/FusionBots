@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import './Navbar.css';
-import logo from '../assets/fusionbots-logo.jpeg';
+const logo = '/fusionbots-logo.jpeg';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
