@@ -12,6 +12,7 @@
   --mobile-overlay: rgba(0, 0, 0, 0.5);
   --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --hamburger-color: #0a2a75;
 }
 
 /* Mobile overlay */
@@ -209,15 +210,16 @@
 .hamburger-line {
   width: 24px;
   height: 3px;
-  background: var(--text-primary);
+  background: var(--hamburger-color);
   border-radius: 2px;
   transition: var(--transition-smooth);
   margin: 2px 0;
+  box-shadow: 0 0 4px rgba(10, 42, 117, 0.6);
 }
 
 .mobile-menu-btn.active .hamburger-line:nth-child(1) {
   transform: rotate(45deg) translate(6px, 6px);
-  background: var(--text-primary);
+  background: var(--hamburger-color);
 }
 
 .mobile-menu-btn.active .hamburger-line:nth-child(2) {
@@ -227,7 +229,7 @@
 
 .mobile-menu-btn.active .hamburger-line:nth-child(3) {
   transform: rotate(-45deg) translate(6px, -6px);
-  background: var(--text-primary);
+  background: var(--hamburger-color);
 }
 
 /* Mobile navigation */
@@ -352,24 +354,24 @@
   .navbar {
     padding: 0.4rem 0.8rem;
   }
-  
+
   .desktop-nav {
     display: block;
   }
-  
+
   .mobile-menu-btn {
     display: none;
   }
-  
+
   .mobile-nav {
     display: none;
   }
-  
+
   .logo-img {
     height: 50px;
     width: 50px;
   }
-  
+
   .logo-text {
     font-size: 1rem;
   }
@@ -379,7 +381,7 @@
   .nav-links {
     gap: 0.8rem;
   }
-  
+
   .nav-link {
     padding: 0.6rem 1rem;
     font-size: 0.95rem;
@@ -396,20 +398,20 @@
     --text-secondary: #cbd5e0;
     --mobile-overlay: rgba(0, 0, 0, 0.7);
   }
-  
+
   .mobile-nav {
     background: #2d3748;
   }
-  
+
   .mobile-nav-link {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   }
-  
+
   .mobile-nav-link:hover,
   .mobile-nav-link.active {
     background: rgba(102, 126, 234, 0.15);
   }
-  
+
   .mobile-cta {
     border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
@@ -422,7 +424,7 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .logo-glow {
     animation: none;
   }
@@ -433,12 +435,12 @@
   .navbar {
     border-bottom: 2px solid;
   }
-  
+
   .nav-link,
   .mobile-nav-link {
     border: 1px solid transparent;
   }
-  
+
   .nav-link:focus,
   .mobile-nav-link:focus {
     border-color: currentColor;
