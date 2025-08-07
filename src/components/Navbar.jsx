@@ -63,6 +63,7 @@ const Navbar = () => {
     { href: '#about', label: 'About' },
     { href: '#products', label: 'Products' },
     { href: '#founders', label: 'Founders' },
+    { href: '#goals', label: 'Goals' },
     { href: '#contact', label: 'Contact' },
   ];
 
