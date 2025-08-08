@@ -15,22 +15,19 @@ const Footer = () => {
               <div className="link-group">
                 <h4>Products</h4>
                 <a href="#products">STEM Kits</a>
-                <a href="/catalog">Full Catalog</a>
-                <a href="/custom">Custom Solutions</a>
+                <a href="https://fusionbots.myshopify.com/">Full Catalog</a>
               </div>
               
               <div className="link-group">
                 <h4>Company</h4>
                 <a href="#about">About Us</a>
                 <a href="#founders">Our Team</a>
-                <a href="/careers">Careers</a>
               </div>
               
               <div className="link-group">
                 <h4>Support</h4>
-                <a href="/support">Help Center</a>
-                <a href="/contact">Contact</a>
-                <a href="/warranty">Warranty</a>
+                <a href="https://fusionbots.myshopify.com/">Help Center</a>
+                <a href="https://fusionbots.myshopify.com/">Contact</a>
               </div>
             </div>
           </div>
