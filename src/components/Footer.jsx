@@ -34,7 +34,7 @@ const Footer = () => {
           
           <div className="footer-bottom">
             <div className="footer-info">
-              <p>&copy; 2025 Fusion Bots. Inspiring the next generation of innovators.</p>
+              <p>&copy; 2025 FusionBots. Inspiring the next generation of innovators.</p>
               <div className="footer-badges">
                 <span className="badge">🔬 Premium Quality</span>
                 <span className="badge">� Educational Excellence</span>
