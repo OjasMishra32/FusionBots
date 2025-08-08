@@ -18,7 +18,7 @@ const CTA = () => {
               <span className="highlight-text"> STEM Learning</span>?
             </h2>
             <p className="cta-description">
-              Partner with Fusion Bots to bring cutting-edge robotics and STEM education to your classroom. 
+              Partner with FusionBots to bring cutting-edge robotics and STEM education to your classroom. 
               Experience the future of hands-on learning with our premium educational kits.
             </p>
           </div>
