@@ -1,73 +1,77 @@
-# YSWS Hack Club - React Website
+🚀 FusionBots – STEM Robotics & Education Kits
 
-A modern, premium React.js website for the Young Software Workshop Series (YSWS) Hack Club. This project converts the original HTML/CSS/JS website to a React-based architecture while maintaining all premium animations and effects.
+FusionBots is a modern React.js + Vite-powered website for FusionBots, a STEM education company delivering robotics kits, workshops, and student competitions. The site is designed with premium animations, responsive design, and SEO optimizations to provide a polished user experience.
 
-## ✨ Features
+✨ Features
 
-- **Modern React Architecture** - Component-based structure with custom hooks
-- **Premium Animations** - Scroll-triggered fade-ins, SVG line animations, particle systems
-- **Glassmorphism Design** - Backdrop blur effects and modern UI elements
-- **Mobile-First Responsive** - Optimized for all devices with touch support
-- **Performance Optimized** - Efficient scroll handlers and intersection observers
-- **Accessibility** - Proper semantic markup and keyboard navigation
+Modern React Architecture – Component-based design with hooks
 
-## 🚀 Technologies Used
+Premium Visuals – Particle effects, floating shapes, gradient text, and glassmorphism UI
 
-- **React 18** - Latest React with hooks and functional components
-- **Vite** - Fast development server and build tool
-- **CSS3** - Advanced animations, transforms, and glassmorphism effects
-- **Intersection Observer API** - Scroll-triggered animations
-- **CSS Custom Properties** - Design system with color variables
-- **Satoshi Font** - Premium typography from Google Fonts
+Responsive Design – Optimized for desktop, tablet, and mobile
 
-## 🏗️ Project Structure
+Future-Driven Content – Sections highlighting products, founders, and community goals
 
-```
+SEO-Ready – Structured data, sitemap, and meta tags for better indexing
+
+Performance Optimized – Vite build system with fast load times
+
+🏗️ Project Structure
 src/
-├── components/
-│   ├── Navbar.jsx          # Fixed glassmorphism navigation
-│   ├── Hero.jsx             # Landing section with particles
-│   ├── About.jsx            # Feature cards section
-│   ├── Features.jsx         # Advanced workshops section
-│   ├── Stats.jsx            # Animated counters with SVG
-│   ├── CTA.jsx              # Call to action section
-│   ├── Footer.jsx           # Links and information
-│   └── ScrollProgressLine.jsx # Top progress bar
-├── hooks/
-│   └── useIntersectionObserver.js # Custom hook for animations
-├── App.jsx                  # Main app component
-├── App.css                  # Global styles and animations
-└── main.jsx                 # React entry point
-```
+├── assets/              # Logos and images
+├── components/          # React UI components
+│   ├── Navbar.jsx       # Navigation bar with logo and links
+│   ├── Hero.jsx         # Landing section with animations
+│   ├── About.jsx        # Company story & mission
+│   ├── Products.jsx     # Featured robotics kits
+│   ├── Founders.jsx     # Founder team profiles
+│   ├── Contact.jsx      # Contact form and info
+│   ├── Footer.jsx       # Links and legal info
+│   └── Goals.jsx        # Future plans (workshops, fundraisers, competitions)
+├── App.jsx              # Main app component
+├── App.css              # Global styles
+└── main.jsx             # React entry point
+public/
+├── favicon.ico          # Favicon
+├── favicon-32x32.png    # 32x32 favicon
+├── favicon-16x16.png    # 16x16 favicon
+├── fusionbots-logo.jpeg # Logo for SEO / indexing
+└── sitemap.xml          # Sitemap for Google indexing
 
-## 🎨 Key Components
+🎨 Key Components
+Navbar
 
-### **Navbar**
-- Fixed position with glassmorphism effect
-- Active link detection based on scroll position
-- Responsive design with mobile optimization
+Fixed position with FusionBots logo
 
-### **Hero**
-- Animated particle system
-- Floating shapes with CSS animations
-- Parallax grid background
-- Gradient text effects
+Active link highlighting
 
-### **About & Features**
-- Intersection Observer-based fade-ins
-- Reversible scroll animations
-- Ripple click effects
-- Gradient borders and hover states
+Responsive mobile menu with overlay
 
-### **Stats**
-- Animated SVG line that draws on scroll
-- Number counting animations
-- Dynamic stroke width effects
-- Responsive grid layout
+Hero
 
-## 🛠️ Development
+Animated particle background
 
-```bash
+Mission-driven tagline with gradient effects
+
+Products
+
+Highlight robotics/STEM kits
+
+Links to Shopify store
+
+Founders
+
+Profile cards of FusionBots team
+
+Goals (Future Tab)
+
+Upcoming workshops, competitions, fundraisers, and donations initiatives
+
+Footer
+
+Contact info and quick links
+
+🛠️ Development
 # Install dependencies
 npm install
 
@@ -79,63 +83,30 @@ npm run build
 
 # Preview production build
 npm run preview
-```
 
-## 📱 Responsive Design
+📱 Responsive Design
 
-- **Desktop** (1024px+): Full animations and effects
-- **Tablet** (768px-1024px): Simplified floating elements
-- **Mobile** (480px-768px): Optimized layouts and hidden complex animations
-- **Small Mobile** (<480px): Minimal animations for performance
+Desktop (1024px+) – Full animations and effects
 
-## 🎯 Performance Optimizations
+Tablet (768px–1024px) – Adjusted layouts and optimized performance
 
-- **Touch Device Detection** - Disables hover effects on touch devices
-- **Animation Reduction** - Simplified animations on mobile for better performance
-- **Efficient Scroll Handlers** - Optimized scroll event listeners
-- **Legacy Browser Support** - Fallbacks for backdrop-filter and modern CSS
+Mobile (<768px) – Simplified UI for speed
 
-## 🎨 Animation Features
+🔎 SEO Optimizations
 
-- **Scroll Progress Line** - Top gradient progress bar
-- **SVG Line Animation** - Path drawing effects in stats section
-- **Intersection Observer** - Reversible fade-in animations
-- **Particle System** - Floating particles in hero section
-- **Counter Animations** - Number counting effects
-- **Ripple Effects** - Click interaction feedback
-- **Glassmorphism** - Backdrop blur and transparency effects
+Meta tags & descriptions for search engines
 
-## 🔧 Custom Hooks
+Structured Data (JSON-LD) for logo and organization info
 
-### `useIntersectionObserver`
-- Handles element visibility detection
-- Supports reversible animations
-- Configurable threshold and root margin
-- Returns visibility state and element ref
+Sitemap & robots.txt for Google Search Console
 
-## 📦 Build Output
+Favicon support across all browsers
 
-The build process creates an optimized production bundle with:
-- Minified CSS and JavaScript
-- Optimized images and assets
-- Modern browser support
-- Performance-optimized loading
+🤝 Contributing
 
-## 🤝 Contributing
+Contributions are welcome!
+Please fork the repo and submit a pull request with improvements.
 
-This project maintains the exact design and functionality of the original YSWS Hack Club website while providing a modern React architecture for easier maintenance and development.
+📄 License
 
-## 📄 License
-
-© 2025 YSWS Hack Club. All rights reserved.+ Vite
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+© 2025 FusionBots. All rights reserved.
