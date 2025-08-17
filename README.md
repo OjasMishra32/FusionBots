@@ -16,7 +16,7 @@ The site is designed with **premium animations, responsive design, and SEO optim
 ---
 
 ## 🏗️ Project Structure
-
+```bash
 src/
 ├── assets/              # Logos and images
 ├── components/          # React UI components
@@ -38,7 +38,7 @@ public/
 ├── favicon-16x16.png    # 16x16 favicon
 ├── fusionbots-logo.jpeg # Logo for SEO / indexing
 └── sitemap.xml          # Sitemap for Google indexing
-
+```
 
 ---
 
