@@ -18,25 +18,26 @@ The site is designed with **premium animations, responsive design, and SEO optim
 ## 🏗️ Project Structure
 
 src/
-├── assets/ # Logos and images
-├── components/ # React UI components
-│ ├── Navbar.jsx # Navigation bar with logo and links
-│ ├── Hero.jsx # Landing section with animations
-│ ├── About.jsx # Company story & mission
-│ ├── Products.jsx # Featured robotics kits
-│ ├── Founders.jsx # Founder team profiles
-│ ├── Contact.jsx # Contact form and info
-│ ├── Footer.jsx # Links and legal info
-│ └── Goals.jsx # Future plans (workshops, fundraisers, competitions)
-├── App.jsx # Main app component
-├── App.css # Global styles
-└── main.jsx # React entry point
+├── assets/              # Logos and images
+├── components/          # React UI components
+│   ├── Navbar.jsx       # Navigation bar with logo and links
+│   ├── Hero.jsx         # Landing section with animations
+│   ├── About.jsx        # Company story & mission
+│   ├── Products.jsx     # Featured robotics kits
+│   ├── Founders.jsx     # Founder team profiles
+│   ├── Contact.jsx      # Contact form and info
+│   ├── Footer.jsx       # Links and legal info
+│   └── Goals.jsx        # Future plans (workshops, fundraisers, competitions)
+├── App.jsx              # Main app component
+├── App.css              # Global styles
+└── main.jsx             # React entry point
+
 public/
-├── favicon.ico # Favicon
-├── favicon-32x32.png # 32x32 favicon
-├── favicon-16x16.png # 16x16 favicon
+├── favicon.ico          # Favicon
+├── favicon-32x32.png    # 32x32 favicon
+├── favicon-16x16.png    # 16x16 favicon
 ├── fusionbots-logo.jpeg # Logo for SEO / indexing
-└── sitemap.xml # Sitemap for Google indexing
+└── sitemap.xml          # Sitemap for Google indexing
 
 
 ---
