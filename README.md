@@ -1,5 +1,5 @@
 # 🚀 FusionBots – STEM Robotics & Education Kits
-
+ 
 FusionBots is a modern **React.js + Vite** powered website for **FusionBots**, a STEM education company delivering robotics kits, workshops, and student competitions.  
 The site is designed with **premium animations, responsive design, and SEO optimizations** to provide a polished user experience.
 
