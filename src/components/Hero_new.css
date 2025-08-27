@@ -319,7 +319,7 @@
  margin-top: 2rem;
 }
 
-
+/* Button Styles */
 .btn {
  padding: 1rem 2rem;
  border-radius: 8px;
@@ -331,18 +331,15 @@
  font-size: 1rem;
 }
 
-
 .btn-primary {
  background: var(--accent-blue);
  color: var(--white);
 }
 
-
 .btn-primary:hover {
  background: var(--accent-purple);
  transform: translateY(-2px);
 }
-
 
 .btn-secondary {
  background: transparent;
@@ -350,11 +347,28 @@
  border: 2px solid var(--gray-600);
 }
 
-
 .btn-secondary:hover {
  background: var(--white);
  color: var(--primary);
  border-color: var(--white);
+}
+
+
+.btn-small { 
+  color: white;
+  background: linear-gradient(135deg, #06b6d4, #6366f1);
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.6s ease; /* Increased duration for slower transition */
+}
+
+
+.btn-small:hover {
+  background: linear-gradient(135deg, #ec4899, #a855f7, #c084fc);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
 }
 
 

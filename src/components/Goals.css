@@ -47,15 +47,20 @@
 
 /* Grid */
 .stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
+  display: grid; 
+  grid-template-columns: repeat(3, minmax(280px, 1fr)); 
+  gap: 2rem; 
   margin-top: 4rem;
 }
 
+.stats-grid > :nth-child(7) {  /*The 7th element(new goal) is hardcoded, needs to be changed if anytime new goals are added*/
+  grid-column: 2; 
+}
+
+
 /* Individual Goal Box */
 .stat-item {
-  background: white;
+  background: linear-gradient(135deg, #B2EBF2, #E1BEE7);
   border-radius: 16px;
   padding: 2rem;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
@@ -71,7 +76,7 @@
 /* Text inside Goal Box */
 .stat-label {
   font-size: 1.05rem;
-  color: #334155;
+  color: black; 
   font-weight: 600;
   line-height: 1.5;
 }
@@ -94,3 +99,29 @@
     font-size: 1rem;
   }
 }
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fade-in-box {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.fade-in-box.visible {
+  opacity: 1;
+  transform: translateY(0); 
+}
+
+.fade-in-box.visible:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: linear-gradient(135deg, #00BCD4, #BA68C8);
+}
+
