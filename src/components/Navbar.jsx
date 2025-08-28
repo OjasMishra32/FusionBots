@@ -302,7 +302,7 @@ const Navbar = () => {
             </div>
 
             <div style={{ color: '#333', lineHeight: 1.4 }}>
-              Learn robotics & coding with FusionBots. Spots are limited.
+              Learn robotics & coding with FusionBots. Aug 11 @ 11AM EST
             </div>
 
             <a
