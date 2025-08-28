@@ -17,13 +17,11 @@ const Navbar = () => {
   useEffect(() => {
     if (infoOpen) {
       setPopupMounted(true);
-      // allow next paint before animating in
       const id = requestAnimationFrame(() => setPopupShow(true));
       return () => cancelAnimationFrame(id);
     } else {
-      // animate out, then unmount after duration
       setPopupShow(false);
-      const t = setTimeout(() => setPopupMounted(false), 220);
+      const t = setTimeout(() => setPopupMounted(false), 260);
       return () => clearTimeout(t);
     }
   }, [infoOpen]);
@@ -31,6 +29,9 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
+
+      // Close popup on scroll for a clean UX
+      if (infoOpen) setInfoOpen(false);
 
       const sections = document.querySelectorAll('section[id]');
       let current = '';
@@ -69,7 +70,7 @@ const Navbar = () => {
       document.removeEventListener('keydown', handleEscKey);
       document.body.style.overflow = 'unset';
     };
-  }, [menuOpen]);
+  }, [menuOpen, infoOpen]);
 
   const navLinks = [
     { href: '#hero', label: 'Home' },
@@ -98,7 +99,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Inline keyframes for hover/idle animations */}
+      {/* Inline keyframes and motion helpers */}
       <style>{`
         @keyframes floatY {
           0% { transform: translateY(0); }
@@ -110,9 +111,18 @@ const Navbar = () => {
           70% { box-shadow: 0 0 0 12px rgba(224,74,89,0); }
           100% { box-shadow: 0 0 0 0 rgba(224,74,89,0); }
         }
+        /* Springy enter and graceful exit for the popup */
+        @keyframes fbPopIn {
+          0%   { opacity: 0; transform: translateY(12px) scale(0.96); }
+          60%  { opacity: 1; transform: translateY(-2px) scale(1.015); }
+          100% { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+        @keyframes fbPopOut {
+          0%   { opacity: 1; transform: translateY(0)    scale(1); }
+          100% { opacity: 0; transform: translateY(8px)  scale(0.98); }
+        }
         @media (prefers-reduced-motion: reduce) {
           .fb-anim, .fb-pulse { animation: none !important; }
-          .fb-transition { transition: none !important; }
         }
       `}</style>
 
@@ -230,10 +240,9 @@ const Navbar = () => {
         }}
         aria-live="polite"
       >
-        {/* Popup (smooth fade/scale) */}
+        {/* Popup with springy open and smooth close */}
         {popupMounted && (
           <div
-            className="fb-transition"
             style={{
               pointerEvents: 'auto',
               background: '#ffffff',
@@ -245,10 +254,12 @@ const Navbar = () => {
               maxWidth: '92vw',
               textAlign: 'left',
               fontSize: '14.5px',
-              transform: popupShow ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.98)',
-              opacity: popupShow ? 1 : 0,
-              transition: 'opacity 200ms ease, transform 200ms cubic-bezier(.22,.96,.36,1)',
-              border: '1px solid rgba(0,0,0,0.07)'
+              border: '1px solid rgba(0,0,0,0.07)',
+              backdropFilter: 'blur(6px)',
+              WebkitBackdropFilter: 'blur(6px)',
+              animation: popupShow
+                ? 'fbPopIn 260ms cubic-bezier(.2,1,.22,1) both'
+                : 'fbPopOut 220ms ease both'
             }}
             role="dialog"
             aria-modal="false"
@@ -276,7 +287,6 @@ const Navbar = () => {
                 {/* Info icon */}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M12 8.25a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-1.25 2.75h2.5v7h-2.5v-7Z" fill="currentColor"/>
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="0" fill="transparent"/>
                 </svg>
               </div>
               <div style={{ fontWeight: 700, fontSize: '15.5px' }}>
@@ -329,7 +339,7 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Floating button */}
+        {/* Floating button with morph + icon rotate */}
         <button
           onClick={() => setInfoOpen((v) => !v)}
           aria-label={infoOpen ? 'Hide workshop info' : 'Show workshop info'}
@@ -340,17 +350,19 @@ const Navbar = () => {
             color: '#fff',
             border: 'none',
             borderRadius: '999px',
-            minWidth: 56,
+            width: infoOpen ? 120 : 56,   // smooth width morph
             height: 56,
             padding: '0 14px',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'center',
             gap: 10,
             cursor: 'pointer',
-            boxShadow: '0 10px 22px rgba(224,74,89,0.35)',
+            boxShadow: infoOpen
+              ? '0 12px 28px rgba(224,74,89,0.45)'
+              : '0 10px 22px rgba(224,74,89,0.35)',
             animation: 'floatY 4s ease-in-out infinite, pulseRing 3.5s ease-out infinite',
-            // hover/focus feedback
-            transition: 'transform 160ms ease, box-shadow 160ms ease'
+            transition: 'width 220ms cubic-bezier(.2,1,.22,1), box-shadow 180ms ease, transform 160ms ease'
           }}
           onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; }}
@@ -364,17 +376,30 @@ const Navbar = () => {
               borderRadius: '50%',
               background: 'rgba(255,255,255,0.18)',
               display: 'grid',
-              placeItems: 'center'
+              placeItems: 'center',
+              transition: 'transform 260ms cubic-bezier(.2,1,.22,1)'
             }}
           >
-            {/* White info icon */}
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+            {/* White info icon (rotates on toggle) */}
+            <svg
+              width="15" height="15" viewBox="0 0 24 24" fill="none"
+              style={{ transform: infoOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 260ms cubic-bezier(.2,1,.22,1)' }}
+            >
               <path d="M12 7.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm-1.5 3h3v8h-3v-8Z" fill="#fff"/>
-              <circle cx="12" cy="12" r="10.5" stroke="rgba(255,255,255,0.0)" />
             </svg>
           </div>
-          <span style={{ fontWeight: 800, letterSpacing: '.2px' }}>
-            {infoOpen ? 'Close' : 'Info'}
+          {/* Label fades in/out during morph to avoid choppiness */}
+          <span
+            style={{
+              fontWeight: 800,
+              letterSpacing: '.2px',
+              whiteSpace: 'nowrap',
+              opacity: infoOpen ? 1 : 0,
+              transform: infoOpen ? 'translateX(0)' : 'translateX(-6px)',
+              transition: 'opacity 200ms ease 40ms, transform 200ms ease 40ms'
+            }}
+          >
+            Close
           </span>
         </button>
       </div>
