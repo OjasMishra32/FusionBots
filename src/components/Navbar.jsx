@@ -10,16 +10,18 @@ const Navbar = () => {
 
   // Floating info button state (with animated mount)
   const [infoOpen, setInfoOpen] = useState(false);
-  const [popupMounted, setPopupMounted] = useState(false);  // presence in DOM
-  const [popupShow, setPopupShow] = useState(false);        // opacity/transform
+  const [popupMounted, setPopupMounted] = useState(false);  // controls presence in DOM
+  const [popupShow, setPopupShow] = useState(false);        // drives opacity/transform for smooth animation
 
   // Mount/unmount flow for smooth open/close
   useEffect(() => {
     if (infoOpen) {
       setPopupMounted(true);
+      // allow next paint before animating in
       const id = requestAnimationFrame(() => setPopupShow(true));
       return () => cancelAnimationFrame(id);
     } else {
+      // animate out, then unmount after duration
       setPopupShow(false);
       const t = setTimeout(() => setPopupMounted(false), 220);
       return () => clearTimeout(t);
@@ -29,9 +31,6 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
-
-      // Auto-close popup on scroll
-      if (infoOpen) setInfoOpen(false);
 
       const sections = document.querySelectorAll('section[id]');
       let current = '';
@@ -60,7 +59,7 @@ const Navbar = () => {
 
     document.body.style.overflow = menuOpen ? 'hidden' : 'unset';
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('scroll', handleScroll);
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscKey);
 
@@ -70,7 +69,7 @@ const Navbar = () => {
       document.removeEventListener('keydown', handleEscKey);
       document.body.style.overflow = 'unset';
     };
-  }, [menuOpen, infoOpen]);
+  }, [menuOpen]);
 
   const navLinks = [
     { href: '#hero', label: 'Home' },
@@ -87,35 +86,33 @@ const Navbar = () => {
 
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      element.scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+      });
     }
   };
 
-  // Brand gradient
+  // Brand colors (matches your theme)
   const brandGrad = 'linear-gradient(135deg, #7a0e23, #e04a59 60%, #ff8aa7)';
 
   return (
     <>
-      {/* Keyframes + motion helpers (no external CSS changes needed) */}
+      {/* Inline keyframes for hover/idle animations */}
       <style>{`
         @keyframes floatY {
           0% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
           100% { transform: translateY(0); }
         }
-        /* Popup: springy in, smooth out */
-        @keyframes fbPopIn {
-          0%   { opacity: 0; transform: translateY(12px) scale(0.96); }
-          60%  { opacity: 1; transform: translateY(-2px) scale(1.015); }
-          100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
-        @keyframes fbPopOut {
-          0%   { opacity: 1; transform: translateY(0) scale(1); }
-          100% { opacity: 0; transform: translateY(8px) scale(0.985); }
+        @keyframes pulseRing {
+          0% { box-shadow: 0 0 0 0 rgba(224,74,89,0.35); }
+          70% { box-shadow: 0 0 0 12px rgba(224,74,89,0); }
+          100% { box-shadow: 0 0 0 0 rgba(224,74,89,0); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .fb-anim { animation: none !important; }
-          .fb-t { transition: none !important; }
+          .fb-anim, .fb-pulse { animation: none !important; }
+          .fb-transition { transition: none !important; }
         }
       `}</style>
 
@@ -222,20 +219,21 @@ const Navbar = () => {
       <div
         style={{
           position: 'fixed',
-          bottom: 'calc(18px + env(safe-area-inset-bottom, 0))',
+          bottom: '18px',
           right: '18px',
           zIndex: 10000,
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-end',
           gap: '10px',
-          pointerEvents: 'none' // container ignores clicks; children allow
+          pointerEvents: 'none' // container ignores clicks; children enable
         }}
         aria-live="polite"
       >
-        {/* Popup */}
+        {/* Popup (smooth fade/scale) */}
         {popupMounted && (
           <div
+            className="fb-transition"
             style={{
               pointerEvents: 'auto',
               background: '#ffffff',
@@ -247,17 +245,23 @@ const Navbar = () => {
               maxWidth: '92vw',
               textAlign: 'left',
               fontSize: '14.5px',
-              border: '1px solid rgba(0,0,0,0.06)',
-              backdropFilter: 'blur(6px)',
-              WebkitBackdropFilter: 'blur(6px)',
-              animation: popupShow ? 'fbPopIn 250ms cubic-bezier(.2,1,.22,1) both'
-                                   : 'fbPopOut 200ms ease both'
+              transform: popupShow ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.98)',
+              opacity: popupShow ? 1 : 0,
+              transition: 'opacity 200ms ease, transform 200ms cubic-bezier(.22,.96,.36,1)',
+              border: '1px solid rgba(0,0,0,0.07)'
             }}
             role="dialog"
             aria-modal="false"
             aria-label="Workshop signup"
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 8 }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                marginBottom: '8px'
+              }}
+            >
               <div
                 style={{
                   width: 26, height: 26, minWidth: 26,
@@ -269,11 +273,15 @@ const Navbar = () => {
                 }}
                 aria-hidden="true"
               >
+                {/* Info icon */}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M12 8.25a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-1.25 2.75h2.5v7h-2.5v-7Z" fill="currentColor"/>
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="0" fill="transparent"/>
                 </svg>
               </div>
-              <div style={{ fontWeight: 700, fontSize: '15.5px' }}>Free Online Workshop</div>
+              <div style={{ fontWeight: 700, fontSize: '15.5px' }}>
+                Free Online Workshop
+              </div>
               <button
                 onClick={() => setInfoOpen(false)}
                 aria-label="Close"
@@ -321,46 +329,57 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Floating circular FAB (centered icon, no inner bubble, no gap) */}
+        {/* Floating button */}
         <button
-          onClick={() => setInfoOpen(v => !v)}
+          onClick={() => setInfoOpen((v) => !v)}
           aria-label={infoOpen ? 'Hide workshop info' : 'Show workshop info'}
-          className="fb-anim fb-t"
+          className="fb-anim fb-pulse"
           style={{
             pointerEvents: 'auto',
             background: brandGrad,
             color: '#fff',
             border: 'none',
-            borderRadius: '50%',
-            width: 56,
+            borderRadius: '999px',
+            minWidth: 56,
             height: 56,
-            display: 'grid',
-            placeItems: 'center',
+            padding: '0 14px',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
             cursor: 'pointer',
-            boxShadow: infoOpen
-              ? '0 12px 28px rgba(224,74,89,0.45)'
-              : '0 10px 22px rgba(224,74,89,0.35)',
-            animation: 'floatY 4s ease-in-out infinite',
-            transition: 'box-shadow 180ms ease, transform 160ms ease, background 180ms ease',
-            touchAction: 'manipulation'
+            boxShadow: '0 10px 22px rgba(224,74,89,0.35)',
+            animation: 'floatY 4s ease-in-out infinite, pulseRing 3.5s ease-out infinite',
+            // hover/focus feedback
+            transition: 'transform 160ms ease, box-shadow 160ms ease'
           }}
           onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; }}
           onFocus={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)'; }}
           onBlur={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; }}
         >
-          {/* Single centered info icon */}
-          <svg
-            width="18" height="18" viewBox="0 0 24 24" fill="none"
-            style={{ transform: infoOpen ? 'rotate(180deg)' : 'rotate(0deg)', transition: 'transform 240ms cubic-bezier(.2,1,.22,1)' }}
+          <div
             aria-hidden="true"
+            style={{
+              width: 28, height: 28, minWidth: 28,
+              borderRadius: '50%',
+              background: 'rgba(255,255,255,0.18)',
+              display: 'grid',
+              placeItems: 'center'
+            }}
           >
-            <path d="M12 7.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm-1.5 3h3v8h-3v-8Z" fill="#fff"/>
-          </svg>
+            {/* White info icon */}
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+              <path d="M12 7.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm-1.5 3h3v8h-3v-8Z" fill="#fff"/>
+              <circle cx="12" cy="12" r="10.5" stroke="rgba(255,255,255,0.0)" />
+            </svg>
+          </div>
+          <span style={{ fontWeight: 800, letterSpacing: '.2px' }}>
+            {infoOpen ? 'Close' : 'Info'}
+          </span>
         </button>
       </div>
     </>
   );
 };
 
-export default Navbar;
+export default Navbar;         
