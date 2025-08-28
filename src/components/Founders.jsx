@@ -1,12 +1,10 @@
-import { useMemo, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import './Founders.css';
 import OjasS from '../assets/OjasS.jpg';
 import OjasM from '../assets/OjasM.jpeg';
 import Anvay from '../assets/Anvay.jpeg';
 import Leo from '../assets/Leo.jpeg';
-
-const SPOTLIGHT_RADIUS = 220; // px
 
 const Founders = () => {
   const [headerRef, headerVisible] = useIntersectionObserver();
@@ -15,84 +13,151 @@ const Founders = () => {
   const [card3Ref, card3Visible] = useIntersectionObserver();
   const [card4Ref, card4Visible] = useIntersectionObserver();
 
-  const founders = useMemo(
-    () => [
-      {
-        name: 'Ojasva Mishra',
-        role: 'Co-Founder & CEO',
-        background:
-          'I lead engineering, curriculum, and strategy to make robotics education accessible, practical, and innovation-driven. With competitive robotics, aerospace research, and STEM venture experience, I build teams that push autonomy and real-world problem solving.',
-        image: OjasM,
-        expertise: ['Robotics', 'Education', 'Innovation'],
-        accent: ['#7877c6', '#ff77c6'],
-        link: 'https://ojasvamishra.me',
-      },
-      {
-        name: 'Ojas Sarada',
-        role: 'Co-Founder & CTO',
-        background:
-          'I drive systems design and product innovation across embedded, control, and AI—turning theory into scalable hands-on learning platforms and intelligent hardware.',
-        image: OjasS,
-        expertise: ['Computer Engineering', 'Robotics', 'AI'],
-        accent: ['#00d4ff', '#7877c6'],
-      },
-      {
-        name: 'Anvay Ajmera',
-        role: 'Co-Founder & Head of Innovation',
-        background:
-          'I blend AI, design, and pedagogy to build engaging STEM experiences. As a youth delegate and 2-time UN speaker, I advocate for equitable access to quality STEM worldwide.',
-        image: Anvay,
-        expertise: ['AI', 'Machine Learning', 'Pedagogy'],
-        accent: ['#ff77c6', '#00d4ff'],
-      },
-      {
-        name: 'Leo Shi',
-        role: 'Co-Founder & CFO',
-        background:
-          'I lead financial strategy, budgeting, and risk. Pursuing Finance at Stern with a foundation in accounting, modeling, and data-driven decision making.',
-        image: Leo,
-        expertise: ['Finance', 'Accounting', 'Data Analysis'],
-        accent: ['#00ffcc', '#0077ff'],
-      },
-    ],
-    []
-  );
+  const founders = [
+    {
+      name: 'Ojasva Mishra',
+      role: 'Co-Founder & CEO',
+      background:
+        'I lead engineering, curriculum, and strategy to make robotics education accessible, practical, and innovation-driven. With competitive robotics, aerospace research, and STEM venture experience, I build teams that push autonomy and real-world problem solving.',
+      image: OjasM,
+      expertise: ['Robotics', 'Education', 'Innovation'],
+      accent: ['#7877c6', '#ff77c6'],
+      link: 'https://ojasvamishra.me',
+    },
+    {
+      name: 'Ojas Sarada',
+      role: 'Co-Founder & CTO',
+      background:
+        'I drive systems design and product innovation across embedded, control, and AI—turning theory into scalable hands-on learning platforms and intelligent hardware.',
+      image: OjasS,
+      expertise: ['Computer Engineering', 'Robotics', 'AI'],
+      accent: ['#00d4ff', '#7877c6'],
+    },
+    {
+      name: 'Anvay Ajmera',
+      role: 'Co-Founder & Head of Innovation',
+      background:
+        'I blend AI, design, and pedagogy to build engaging STEM experiences. As a youth delegate and 2-time UN speaker, I advocate for equitable access to quality STEM worldwide.',
+      image: Anvay,
+      expertise: ['AI', 'Machine Learning', 'Pedagogy'],
+      accent: ['#ff77c6', '#00d4ff'],
+    },
+    {
+      name: 'Leo Shi',
+      role: 'Co-Founder & CFO',
+      background:
+        'I lead financial strategy, budgeting, and risk. Pursuing Finance at Stern with a foundation in accounting, modeling, and data-driven decision making.',
+      image: Leo,
+      expertise: ['Finance', 'Accounting', 'Data Analysis'],
+      accent: ['#00ffcc', '#0077ff'],
+    },
+  ];
 
   const cardRefs = [card1Ref, card2Ref, card3Ref, card4Ref];
   const cardVisibility = [card1Visible, card2Visible, card3Visible, card4Visible];
 
   return (
-    <section id="founders" className="section founders-section" style={styles.section}>
-      {/* Ambient gradient blobs */}
-      <div aria-hidden style={{ ...styles.blob, ...styles.blobA }} />
-      <div aria-hidden style={{ ...styles.blob, ...styles.blobB }} />
+    <section id="founders" className="section founders-section">
+      {/* Minimal scoped styles to avoid touching your CSS files */}
+      <style>{`
+        /* Scope to founders-section to avoid leaks */
+        .founders-section .fx-grid {
+          display: grid;
+          grid-template-columns: repeat(12, 1fr);
+          gap: 1.2rem;
+          align-items: stretch;
+        }
+        @media (min-width: 720px) {
+          .founders-section .fx-card { grid-column: span 6; }
+          .founders-section .fx-inner { grid-template-columns: 240px 1fr; }
+          .founders-section .fx-media { height: 240px; }
+        }
+        @media (max-width: 719.98px) {
+          .founders-section .fx-card { grid-column: span 12; }
+          .founders-section .fx-inner { grid-template-columns: 1fr; }
+          .founders-section .fx-media { height: 220px; }
+        }
 
-      <div className="container" style={styles.container}>
+        .founders-section .fx-header {
+          text-align: center; margin-bottom: 2.4rem;
+          transition: opacity .6s ease, transform .6s ease;
+        }
+        .founders-section .fx-badge {
+          display:inline-block; padding:.35rem .7rem; border-radius:999px;
+          font-size:.8rem; letter-spacing:.04em;
+          background: linear-gradient(135deg, rgba(124,58,237,.15), rgba(236,72,153,.15));
+          border:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.85);
+          backdrop-filter: blur(6px);
+        }
+        .founders-section .fx-title { font-size:2.1rem; margin:.8rem 0 .4rem; line-height:1.15; }
+        .founders-section .fx-sub { max-width:760px; margin:0 auto; opacity:.85; }
+
+        .founders-section .fx-card {
+          position:relative; border-radius:20px; border:1px solid rgba(255,255,255,.08);
+          background: rgba(255,255,255,.035); backdrop-filter: blur(8px);
+          box-shadow: 0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
+          transition: transform .6s cubic-bezier(.2,.8,.2,1), opacity .6s ease, background .3s ease;
+          overflow:hidden;
+        }
+        .founders-section .fx-card::before {
+          /* gradient border glow */
+          content:""; position:absolute; inset:-1px; border-radius:22px; pointer-events:none;
+          background: var(--fx-gradient, linear-gradient(135deg,#6366f1,#ec4899));
+          filter: blur(20px); opacity:.18;
+        }
+        .founders-section .fx-card:hover { transform: translateY(-2px); }
+        .founders-section .fx-card.visible { opacity:1; transform: translateY(0); }
+        .founders-section .fx-card:not(.visible) { opacity:0; transform: translateY(16px); }
+
+        .founders-section .fx-inner { position:relative; display:grid; gap:1rem; padding:1.1rem; }
+        .founders-section .fx-media { position:relative; border-radius:16px; overflow:hidden; }
+        .founders-section .fx-avatar { width:100%; height:100%; object-fit:cover; border-radius:16px; transform:translateZ(0); }
+        .founders-section .fx-ring { position:absolute; inset:-1px; border-radius:18px; filter:blur(14px); opacity:.18; }
+        .founders-section .fx-glow { position:absolute; inset:0; border-radius:16px; mix-blend-mode:screen; opacity:.15; filter:blur(18px); }
+
+        .founders-section .fx-info { display:grid; gap:.6rem; }
+        .founders-section .fx-row { display:flex; flex-wrap:wrap; align-items:center; gap:.6rem; }
+        .founders-section .fx-name { font-size:1.25rem; line-height:1.15; margin:0; }
+        .founders-section .fx-role { font-size:.8rem; padding:.28rem .6rem; border-radius:999px; background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12); opacity:.9; }
+        .founders-section .fx-bio { margin:0; opacity:.9; line-height:1.55; }
+        .founders-section .fx-link { display:inline-flex; align-items:center; gap:.5rem; font-size:.92rem; font-weight:500; text-decoration:none; color:#6366f1; border-bottom:1px dashed rgba(99,102,241,.35); width:fit-content; }
+        .founders-section .fx-dot { width:7px; height:7px; border-radius:999px; background:currentColor; box-shadow:0 0 16px currentColor; }
+
+        .founders-section .fx-tags { display:flex; flex-wrap:wrap; gap:.5rem; padding:0; margin:.2rem 0 0; list-style:none; }
+        .founders-section .fx-tag { font-size:.78rem; padding:.28rem .5rem; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); }
+
+        /* Spotlight (mouse-follow) uses CSS variables */
+        .founders-section .fx-card {
+          background:
+            radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.06), transparent 60%),
+            rgba(255,255,255,.035);
+        }
+      `}</style>
+
+      <div className="container">
         <header
           ref={headerRef}
-          className={`section-header fade-in ${headerVisible ? 'visible' : ''}`}
+          className={`fx-header ${headerVisible ? 'visible' : ''}`}
           style={{
-            ...styles.header,
             opacity: headerVisible ? 1 : 0,
-            transform: headerVisible ? 'translateY(0px)' : 'translateY(16px)',
-            transition: 'opacity .6s ease, transform .6s ease',
+            transform: headerVisible ? 'translateY(0)' : 'translateY(16px)',
           }}
         >
-          <span style={styles.badge}>Meet the Team</span>
-          <h2 style={styles.title}>Visionary Founders</h2>
-          <p style={styles.subtitle}>
+          <span className="fx-badge">Meet the Team</span>
+          <h2 className="fx-title">Visionary Founders</h2>
+          <p className="fx-sub">
             Engineering accessible, high-impact STEM learning with beautiful hardware, software, and curriculum.
           </p>
         </header>
 
-        <div className="founders-grid" style={styles.grid}>
+        <div className="fx-grid">
           {founders.map((f, i) => (
-            <FounderCard
+            <Card
               key={f.name}
               data={f}
               refCallback={cardRefs[i]}
               visible={cardVisibility[i]}
-              index={i}
+              delayMs={i * 80}
             />
           ))}
         </div>
@@ -101,98 +166,87 @@ const Founders = () => {
   );
 };
 
-/** ---------- Card Component (spotlight hover + parallax image) ---------- */
-const FounderCard = ({ data, refCallback, visible, index }) => {
-  const [spot, setSpot] = useState({ x: 50, y: 50 });
+const Card = ({ data, refCallback, visible, delayMs = 0 }) => {
+  const cardEl = useRef(null);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
-  const cardRef = useRef(null);
 
   const onMove = (e) => {
-    const rect = cardRef.current?.getBoundingClientRect();
-    if (!rect) return;
+    const el = cardEl.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setSpot({ x, y });
+    el.style.setProperty('--mx', `${x}%`);
+    el.style.setProperty('--my', `${y}%`);
 
-    // subtle tilt
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const dx = (e.clientX - centerX) / rect.width;
-    const dy = (e.clientY - centerY) / rect.height;
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top + rect.height / 2;
+    const dx = (e.clientX - cx) / rect.width;
+    const dy = (e.clientY - cy) / rect.height;
     setTilt({ rx: dy * -6, ry: dx * 6 });
   };
 
   const onLeave = () => {
+    const el = cardEl.current;
+    if (!el) return;
+    el.style.setProperty('--mx', `50%`);
+    el.style.setProperty('--my', `50%`);
     setTilt({ rx: 0, ry: 0 });
-    setSpot({ x: 50, y: 50 });
   };
 
   const gradient = `linear-gradient(135deg, ${data.accent[0]}, ${data.accent[1]})`;
-  const delay = `${80 * index}ms`;
 
   return (
     <article
-      ref={(el) => {
-        cardRef.current = el;
-        if (refCallback) refCallback(el);
+      ref={(node) => {
+        cardEl.current = node;
+        if (refCallback) refCallback(node);
       }}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
-      className={`founder-card fade-in stagger-${index + 1} ${visible ? 'visible' : ''}`}
+      className={`fx-card ${visible ? 'visible' : ''}`}
       style={{
-        ...styles.card,
-        '--delay': delay,
-        borderImage: `${gradient} 1`,
-        opacity: visible ? 1 : 0,
+        transitionDelay: `${delayMs}ms`,
         transform: visible
-          ? `translateY(0px) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`
-          : 'translateY(18px)',
-        transition:
-          'opacity .6s ease var(--delay), transform .6s cubic-bezier(.2,.8,.2,1) var(--delay)',
-        background:
-          `radial-gradient(${SPOTLIGHT_RADIUS}px circle at ${spot.x}% ${spot.y}%, rgba(255,255,255,.06), transparent 60%)`,
+          ? `translateY(0) rotateX(${tilt.rx}deg) rotateY(${tilt.ry}deg)`
+          : 'translateY(16px)',
+        '--fx-gradient': gradient,
       }}
     >
-      <div aria-hidden style={{ ...styles.cardBorder, background: gradient }} />
-      <div style={styles.cardInner}>
-        <div style={styles.mediaWrap}>
-          <div style={{ ...styles.avatarRing, background: gradient }} />
-          <img
-            src={data.image}
-            alt={data.name}
-            loading="lazy"
-            style={styles.avatar}
-            draggable={false}
-          />
-          <div aria-hidden style={{ ...styles.glow, background: gradient }} />
+      <div className="fx-inner">
+        <div className="fx-media">
+          <div className="fx-ring" style={{ background: gradient }} />
+          <img src={data.image} alt={data.name} className="fx-avatar" loading="lazy" />
+          <div className="fx-glow" style={{ background: gradient }} />
         </div>
 
-        <div style={styles.info}>
-          <div style={styles.nameRow}>
-            <h3 style={styles.name}>{data.name}</h3>
-            <span style={styles.role}>{data.role}</span>
+        <div className="fx-info">
+          <div className="fx-row">
+            <h3 className="fx-name">{data.name}</h3>
+            <span className="fx-role">{data.role}</span>
           </div>
 
-          <p style={styles.bio}>{data.background}</p>
+          <p className="fx-bio">
+            {data.background}
+            {data.link && data.name === 'Ojasva Mishra' && (
+              <span style={{ display: 'block', marginTop: '0.75rem' }}>
+                <a
+                  href={data.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="fx-link"
+                  aria-label={`${data.name} portfolio (opens in a new tab)`}
+                >
+                  <span className="fx-dot" aria-hidden />
+                  Visit portfolio
+                </a>
+              </span>
+            )}
+          </p>
 
-          {data.link && (
-            <a
-              href={data.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.link}
-              aria-label={`${data.name} portfolio (opens in a new tab)`}
-            >
-              <span aria-hidden style={styles.linkDot} />
-              Visit portfolio
-            </a>
-          )}
-
-          <ul style={styles.tags} role="list">
+          <ul className="fx-tags" role="list">
             {data.expertise.map((t) => (
-              <li key={t} style={styles.tag}>
-                {t}
-              </li>
+              <li key={t} className="fx-tag">{t}</li>
             ))}
           </ul>
         </div>
@@ -200,207 +254,5 @@ const FounderCard = ({ data, refCallback, visible, index }) => {
     </article>
   );
 };
-
-/** ---------- Inline Styles (scoped, minimal override risk) ---------- */
-const styles = {
-  section: {
-    position: 'relative',
-    padding: '6rem 0 5rem',
-    overflow: 'hidden',
-    isolation: 'isolate',
-  },
-  container: {
-    maxWidth: 1160,
-    margin: '0 auto',
-    padding: '0 1.25rem',
-  },
-  header: {
-    textAlign: 'center',
-    marginBottom: '2.5rem',
-  },
-  badge: {
-    display: 'inline-block',
-    padding: '.35rem .7rem',
-    borderRadius: 999,
-    fontSize: '.8rem',
-    letterSpacing: '.04em',
-    background:
-      'linear-gradient(135deg, rgba(124,58,237,.15), rgba(236,72,153,.15))',
-    border: '1px solid rgba(255,255,255,.12)',
-    color: 'rgba(255,255,255,.85)',
-    backdropFilter: 'blur(6px)',
-  },
-  title: {
-    fontSize: '2.1rem',
-    margin: '.8rem 0 .4rem',
-    lineHeight: 1.15,
-  },
-  subtitle: {
-    maxWidth: 760,
-    margin: '0 auto',
-    opacity: .85,
-    fontSize: '1rem',
-  },
-  grid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(12, 1fr)',
-    gap: '1.2rem',
-    alignItems: 'stretch',
-  },
-  card: {
-    gridColumn: 'span 12',
-    position: 'relative',
-    borderRadius: 20,
-    border: '1px solid transparent',
-    background: 'rgba(255,255,255,.03)',
-    backdropFilter: 'blur(8px)',
-    boxShadow:
-      '0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06)',
-    willChange: 'transform',
-  },
-  cardBorder: {
-    position: 'absolute',
-    inset: 0,
-    borderRadius: 20,
-    padding: 1,
-    mask: 'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
-    WebkitMask:
-      'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
-    WebkitMaskComposite: 'xor',
-    maskComposite: 'exclude',
-    opacity: .22,
-    pointerEvents: 'none',
-  },
-  cardInner: {
-    position: 'relative',
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gap: '1rem',
-    padding: '1.1rem',
-  },
-  mediaWrap: {
-    position: 'relative',
-    height: 220,
-    borderRadius: 16,
-    overflow: 'hidden',
-  },
-  avatar: {
-    width: '100%',
-    height: '100%',
-    objectFit: 'cover',
-    borderRadius: 16,
-    transform: 'translateZ(0)',
-  },
-  avatarRing: {
-    position: 'absolute',
-    inset: -1,
-    borderRadius: 18,
-    filter: 'blur(16px)',
-    opacity: .18,
-  },
-  glow: {
-    position: 'absolute',
-    inset: 0,
-    borderRadius: 16,
-    mixBlendMode: 'screen',
-    opacity: .15,
-    filter: 'blur(18px)',
-  },
-  info: {
-    display: 'grid',
-    gap: '.65rem',
-  },
-  nameRow: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-    gap: '.6rem',
-  },
-  name: {
-    fontSize: '1.25rem',
-    lineHeight: 1.15,
-    margin: 0,
-  },
-  role: {
-    fontSize: '.8rem',
-    padding: '.28rem .6rem',
-    borderRadius: 999,
-    background: 'rgba(255,255,255,.06)',
-    border: '1px solid rgba(255,255,255,.12)',
-    opacity: .9,
-  },
-  bio: {
-    margin: 0,
-    opacity: .9,
-    lineHeight: 1.55,
-  },
-  link: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '.5rem',
-    fontSize: '.92rem',
-    fontWeight: 500,
-    textDecoration: 'none',
-    color: 'rgba(99,102,241,1)',
-    borderBottom: '1px dashed rgba(99,102,241,.35)',
-    width: 'fit-content',
-  },
-  linkDot: {
-    width: 7,
-    height: 7,
-    borderRadius: 999,
-    background: 'currentColor',
-    boxShadow: '0 0 16px currentColor',
-  },
-  tags: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    gap: '.5rem',
-    padding: 0,
-    margin: '.2rem 0 0',
-    listStyle: 'none',
-  },
-  tag: {
-    fontSize: '.78rem',
-    padding: '.28rem .5rem',
-    borderRadius: 999,
-    background: 'rgba(255,255,255,.05)',
-    border: '1px solid rgba(255,255,255,.1)',
-  },
-  blob: {
-    position: 'absolute',
-    width: 520,
-    height: 520,
-    borderRadius: '50%',
-    filter: 'blur(60px)',
-    opacity: .16,
-    zIndex: -1,
-  },
-  blobA: {
-    background: 'conic-gradient(from 120deg, rgba(59,130,246,.8), rgba(236,72,153,.6), rgba(99,102,241,.8))',
-    top: -120,
-    left: -140,
-  },
-  blobB: {
-    background: 'conic-gradient(from 280deg, rgba(16,185,129,.7), rgba(99,102,241,.7), rgba(56,189,248,.7))',
-    bottom: -160,
-    right: -160,
-  },
-};
-
-/** ---------- Responsive tweaks (inline) ---------- */
-Object.assign(styles, {
-  // override grid columns at larger breakpoints via JS media query
-});
-if (typeof window !== 'undefined') {
-  const mq = window.matchMedia('(min-width: 680px)');
-  const apply = () => {
-    styles.card.gridColumn = mq.matches ? 'span 6' : 'span 12';
-    styles.cardInner.gridTemplateColumns = mq.matches ? '240px 1fr' : '1fr';
-    styles.mediaWrap.height = mq.matches ? 240 : 220;
-  };
-  apply();
-  mq.addEventListener?.('change', apply);
-}
 
 export default Founders;
