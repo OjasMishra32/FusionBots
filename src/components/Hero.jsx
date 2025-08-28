@@ -57,13 +57,16 @@ const Hero = () => {
     <section id="hero" className="hero">
       <div className="hero-grid"></div>
 
-      {/* Floating LinkedIn Icon */}
+      {/* Floating Social Icons */}
       <div style={{
         position: 'absolute',
         top: '20px',
         right: '20px',
         zIndex: 1000,
+        display: 'flex',
+        gap: '10px'
       }}>
+        {/* LinkedIn */}
         <a
           href="https://www.linkedin.com/company/fusionbots"
           target="_blank"
@@ -97,6 +100,43 @@ const Hero = () => {
             fill="#0077B5"
           >
             <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8.98H4.5V24H.5V8.98zM8.98 8.98H12.6V10.56H12.66C13.2 9.54 14.6 8.44 16.6 8.44 21.2 8.44 22 11.2 22 15.36V24H18V16.4C18 14.42 17.96 11.94 15.2 11.94 12.4 11.94 12 13.96 12 16.2V24H8.98V8.98z" />
+          </svg>
+        </a>
+
+        {/* Instagram */}
+        <a
+          href="https://www.instagram.com/fusionbots1/"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="FusionBots Instagram"
+          style={{
+            backgroundColor: '#ffffff',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+            transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+            e.currentTarget.style.boxShadow = '0 6px 14px rgba(0,0,0,0.15)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+            e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+          }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="20"
+            width="20"
+            viewBox="0 0 24 24"
+            fill="#E1306C"
+          >
+            <path d="M7.75 2h8.5A5.76 5.76 0 0 1 22 7.75v8.5A5.76 5.76 0 0 1 16.25 22h-8.5A5.76 5.76 0 0 1 2 16.25v-8.5A5.76 5.76 0 0 1 7.75 2zm0 2A3.75 3.75 0 0 0 4 7.75v8.5A3.75 3.75 0 0 0 7.75 20h8.5A3.75 3.75 0 0 0 20 16.25v-8.5A3.75 3.75 0 0 0 16.25 4h-8.5zm8.88 1.38a1 1 0 1 1 0 2 1 1 0 0 1 0-2zM12 7a5 5 0 1 1 0 10 5 5 0 0 1 0-10zm0 2a3 3 0 1 0 0 6 3 3 0 0 0 0-6z" />
           </svg>
         </a>
       </div>
