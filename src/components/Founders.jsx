@@ -6,6 +6,16 @@ import OjasM from '../assets/OjasM.jpeg';
 import Anvay from '../assets/Anvay.jpeg';
 import Leo from '../assets/Leo.jpeg';
 
+/** Safely assign either an object ref or a callback ref */
+function assignRef(targetRef, node) {
+  if (!targetRef) return;
+  if (typeof targetRef === 'function') {
+    targetRef(node);
+  } else {
+    targetRef.current = node;
+  }
+}
+
 const Founders = () => {
   const [headerRef, headerVisible] = useIntersectionObserver();
   const [card1Ref, card1Visible] = useIntersectionObserver();
@@ -58,9 +68,8 @@ const Founders = () => {
 
   return (
     <section id="founders" className="section founders-section">
-      {/* Minimal scoped styles to avoid touching your CSS files */}
+      {/* Scoped CSS to prevent leaks and avoid touching your existing files */}
       <style>{`
-        /* Scope to founders-section to avoid leaks */
         .founders-section .fx-grid {
           display: grid;
           grid-template-columns: repeat(12, 1fr);
@@ -98,9 +107,11 @@ const Founders = () => {
           box-shadow: 0 10px 30px rgba(0,0,0,.25), inset 0 1px 0 rgba(255,255,255,.06);
           transition: transform .6s cubic-bezier(.2,.8,.2,1), opacity .6s ease, background .3s ease;
           overflow:hidden;
+          background:
+            radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.06), transparent 60%),
+            rgba(255,255,255,.035);
         }
         .founders-section .fx-card::before {
-          /* gradient border glow */
           content:""; position:absolute; inset:-1px; border-radius:22px; pointer-events:none;
           background: var(--fx-gradient, linear-gradient(135deg,#6366f1,#ec4899));
           filter: blur(20px); opacity:.18;
@@ -125,19 +136,12 @@ const Founders = () => {
 
         .founders-section .fx-tags { display:flex; flex-wrap:wrap; gap:.5rem; padding:0; margin:.2rem 0 0; list-style:none; }
         .founders-section .fx-tag { font-size:.78rem; padding:.28rem .5rem; border-radius:999px; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.1); }
-
-        /* Spotlight (mouse-follow) uses CSS variables */
-        .founders-section .fx-card {
-          background:
-            radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,.06), transparent 60%),
-            rgba(255,255,255,.035);
-        }
       `}</style>
 
       <div className="container">
         <header
           ref={headerRef}
-          className={`fx-header ${headerVisible ? 'visible' : ''}`}
+          className="fx-header"
           style={{
             opacity: headerVisible ? 1 : 0,
             transform: headerVisible ? 'translateY(0)' : 'translateY(16px)',
@@ -155,7 +159,7 @@ const Founders = () => {
             <Card
               key={f.name}
               data={f}
-              refCallback={cardRefs[i]}
+              extRef={cardRefs[i]}          {/* ✅ pass the hook's ref object */}
               visible={cardVisibility[i]}
               delayMs={i * 80}
             />
@@ -166,12 +170,17 @@ const Founders = () => {
   );
 };
 
-const Card = ({ data, refCallback, visible, delayMs = 0 }) => {
-  const cardEl = useRef(null);
+const Card = ({ data, extRef, visible, delayMs = 0 }) => {
+  const localRef = useRef(null);
   const [tilt, setTilt] = useState({ rx: 0, ry: 0 });
 
+  const setNode = (node) => {
+    localRef.current = node;
+    assignRef(extRef, node); // ✅ safely support object or callback refs
+  };
+
   const onMove = (e) => {
-    const el = cardEl.current;
+    const el = localRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
@@ -187,7 +196,7 @@ const Card = ({ data, refCallback, visible, delayMs = 0 }) => {
   };
 
   const onLeave = () => {
-    const el = cardEl.current;
+    const el = localRef.current;
     if (!el) return;
     el.style.setProperty('--mx', `50%`);
     el.style.setProperty('--my', `50%`);
@@ -198,10 +207,7 @@ const Card = ({ data, refCallback, visible, delayMs = 0 }) => {
 
   return (
     <article
-      ref={(node) => {
-        cardEl.current = node;
-        if (refCallback) refCallback(node);
-      }}
+      ref={setNode}
       onMouseMove={onMove}
       onMouseLeave={onLeave}
       className={`fx-card ${visible ? 'visible' : ''}`}
