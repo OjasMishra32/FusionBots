@@ -62,7 +62,7 @@ const Hero = () => {
         className="hero-social-icons"
         style={{
           position: 'absolute',
-          top: '80px',
+          top: '30px',
           right: '10px',
           zIndex: 1000,
           display: 'flex',
