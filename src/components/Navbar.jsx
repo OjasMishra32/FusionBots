@@ -17,11 +17,9 @@ const Navbar = () => {
   useEffect(() => {
     if (infoOpen) {
       setPopupMounted(true);
-      // allow next paint before animating in
       const id = requestAnimationFrame(() => setPopupShow(true));
       return () => cancelAnimationFrame(id);
     } else {
-      // animate out, then unmount after duration
       setPopupShow(false);
       const t = setTimeout(() => setPopupMounted(false), 220);
       return () => clearTimeout(t);
@@ -86,14 +84,8 @@ const Navbar = () => {
   const handleLinkClick = (href) => {
     setMenuOpen(false);
     setActiveLink(href.substring(1));
-
     const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ 
-        behavior: 'smooth',
-        block: 'start'
-      });
-    }
+    if (element) element.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
   // Brand colors (matches your theme)
@@ -101,7 +93,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Inline keyframes + responsive helpers (no external CSS edits) */}
+      {/* Inline keyframes + responsive helpers (keeps label visible on mobile) */}
       <style>{`
         @keyframes floatY {
           0% { transform: translateY(0); }
@@ -122,20 +114,17 @@ const Navbar = () => {
           0%   { opacity: 1; transform: translateY(0)    scale(1); }
           100% { opacity: 0; transform: translateY(8px)  scale(0.985); }
         }
-        .fb-fab {
-          font-weight: 800;
-          letter-spacing: .2px;
-          white-space: nowrap;
-        }
-        /* On small screens, keep the button compact */
+        .fb-fab { font-weight: 800; letter-spacing: .2px; white-space: nowrap; }
+        .fb-fab .fb-fab-text { display: inline !important; } /* ensure visible on mobile */
+
+        /* Tweak size on small screens but KEEP the text */
         @media (max-width: 480px) {
-          .fb-fab {
-            font-size: 13px;
-            padding: 0 12px !important;
-            height: 52px !important;
-          }
-          .fb-fab .fb-fab-text { display: none; } /* icon-only on very small screens */
+          .fb-fab { font-size: 13px; padding: 0 12px !important; height: 52px !important; }
         }
+        @media (max-width: 360px) {
+          .fb-fab { font-size: 12.5px; padding: 0 10px !important; height: 50px !important; }
+        }
+
         @media (prefers-reduced-motion: reduce) {
           .fb-anim, .fb-pulse { animation: none !important; }
           .fb-transition { transition: none !important; }
@@ -252,7 +241,7 @@ const Navbar = () => {
           flexDirection: 'column',
           alignItems: 'flex-end',
           gap: '10px',
-          pointerEvents: 'none' // container ignores clicks; children enable
+          pointerEvents: 'none'
         }}
         aria-live="polite"
       >
