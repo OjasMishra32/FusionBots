@@ -57,6 +57,31 @@ const Hero = () => {
     <section id="hero" className="hero">
       <div className="hero-grid"></div>
 
+      {/* Floating LinkedIn Icon */}
+      <div style={{
+        position: 'absolute',
+        top: '16px',
+        right: '16px',
+        zIndex: 1000
+      }}>
+        <a
+          href="https://www.linkedin.com/company/fusionbots"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="FusionBots LinkedIn"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            height="28"
+            width="28"
+            fill="#0077B5"
+            viewBox="0 0 24 24"
+          >
+            <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8.98H4.5V24H.5V8.98zM8.98 8.98H12.6V10.56H12.66C13.2 9.54 14.6 8.44 16.6 8.44 21.2 8.44 22 11.2 22 15.36V24H18V16.4C18 14.42 17.96 11.94 15.2 11.94 12.4 11.94 12 13.96 12 16.2V24H8.98V8.98z" />
+          </svg>
+        </a>
+      </div>
+
       <div className="floating-elements">
         <div className="floating-shape"></div>
         <div className="floating-shape"></div>
@@ -67,28 +92,6 @@ const Hero = () => {
       <div className="particles" ref={particlesRef}></div>
 
       <div className="hero-container">
-
-        {/* LinkedIn icon */}
-        <div className="hero-socials">
-          <a
-            href="https://www.linkedin.com/company/fusionbots"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="FusionBots LinkedIn"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              height="28"
-              width="28"
-              fill="#0077B5"
-              viewBox="0 0 24 24"
-              style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 99 }}
-            >
-              <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM.5 8.98H4.5V24H.5V8.98zM8.98 8.98H12.6V10.56H12.66C13.2 9.54 14.6 8.44 16.6 8.44 21.2 8.44 22 11.2 22 15.36V24H18V16.4C18 14.42 17.96 11.94 15.2 11.94 12.4 11.94 12 13.96 12 16.2V24H8.98V8.98z" />
-            </svg>
-          </a>
-        </div>
-
         <div className="hero-content">
           <div className="hero-badge">
             <span>Empowering Young Innovators</span>
