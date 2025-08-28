@@ -83,7 +83,7 @@ const Navbar = () => {
       <nav
         ref={navRef}
         className={`navbar ${isScrolled ? 'scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}
-        style={{ zIndex: 999, position: 'fixed', top: 0, left: 0, width: '100%' }}
+        style={{ zIndex: 999 }}
       >
         <div className="nav-container">
           <div className="logo-section">
