@@ -69,7 +69,7 @@ const Navbar = () => {
 
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({
+      element.scrollIntoView({ 
         behavior: 'smooth',
         block: 'start'
       });
@@ -80,7 +80,11 @@ const Navbar = () => {
     <>
       {menuOpen && <div className="mobile-overlay" onClick={() => setMenuOpen(false)} />}
 
-      <nav ref={navRef} className={`navbar ${isScrolled ? 'scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}>
+      <nav
+        ref={navRef}
+        className={`navbar ${isScrolled ? 'scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}
+        style={{ zIndex: 999 }}
+      >
         <div className="nav-container">
           <div className="logo-section">
             <a href="https://fusionbots.myshopify.com/" className="logo-link">
@@ -124,7 +128,7 @@ const Navbar = () => {
         </div>
 
         <div className={`mobile-nav ${menuOpen ? 'open' : ''}`}>
-          <div className="mobile-nav-content">
+          <div className="mobile-nav-content" style={{ paddingBottom: '80px', paddingTop: '30px' }}>
             {navLinks.map(({ href, label }) => (
               <a
                 key={href}
@@ -151,15 +155,14 @@ const Navbar = () => {
               </a>
             </div>
 
-            {/* Mobile Social Icons */}
-            <div className="mobile-social-icons">
+            <div className="mobile-social-icons" style={{ marginTop: '30px', display: 'flex', justifyContent: 'center', gap: '20px' }}>
               <a
                 href="https://www.linkedin.com/company/fusionbots"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
               >
-                <img src="/linkedin-icon.svg" alt="LinkedIn" className="mobile-social-icon" />
+                <img src="/linkedin-icon.svg" alt="LinkedIn" className="mobile-social-icon" style={{ width: '30px', height: '30px' }} />
               </a>
               <a
                 href="https://www.instagram.com/fusionbots1/"
@@ -167,10 +170,9 @@ const Navbar = () => {
                 rel="noopener noreferrer"
                 aria-label="Instagram"
               >
-                <img src="/instagram-icon.svg" alt="Instagram" className="mobile-social-icon" />
+                <img src="/instagram-icon.svg" alt="Instagram" className="mobile-social-icon" style={{ width: '30px', height: '30px' }} />
               </a>
             </div>
-
           </div>
         </div>
       </nav>
