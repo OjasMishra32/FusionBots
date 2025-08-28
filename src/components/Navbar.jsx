@@ -32,6 +32,9 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
+      // Auto-close popup on scroll
+      if (infoOpen) setInfoOpen(false);
+
       const sections = document.querySelectorAll('section[id]');
       let current = '';
       sections.forEach(section => {
@@ -59,7 +62,7 @@ const Navbar = () => {
 
     document.body.style.overflow = menuOpen ? 'hidden' : 'unset';
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscKey);
 
@@ -69,7 +72,7 @@ const Navbar = () => {
       document.removeEventListener('keydown', handleEscKey);
       document.body.style.overflow = 'unset';
     };
-  }, [menuOpen]);
+  }, [menuOpen, infoOpen]);
 
   const navLinks = [
     { href: '#hero', label: 'Home' },
@@ -98,7 +101,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Inline keyframes for hover/idle animations */}
+      {/* Inline keyframes + responsive helpers (no external CSS edits) */}
       <style>{`
         @keyframes floatY {
           0% { transform: translateY(0); }
@@ -109,6 +112,29 @@ const Navbar = () => {
           0% { box-shadow: 0 0 0 0 rgba(224,74,89,0.35); }
           70% { box-shadow: 0 0 0 12px rgba(224,74,89,0); }
           100% { box-shadow: 0 0 0 0 rgba(224,74,89,0); }
+        }
+        @keyframes fbPopIn {
+          0%   { opacity: 0; transform: translateY(12px) scale(0.96); }
+          60%  { opacity: 1; transform: translateY(-2px) scale(1.015); }
+          100% { opacity: 1; transform: translateY(0)    scale(1); }
+        }
+        @keyframes fbPopOut {
+          0%   { opacity: 1; transform: translateY(0)    scale(1); }
+          100% { opacity: 0; transform: translateY(8px)  scale(0.985); }
+        }
+        .fb-fab {
+          font-weight: 800;
+          letter-spacing: .2px;
+          white-space: nowrap;
+        }
+        /* On small screens, keep the button compact */
+        @media (max-width: 480px) {
+          .fb-fab {
+            font-size: 13px;
+            padding: 0 12px !important;
+            height: 52px !important;
+          }
+          .fb-fab .fb-fab-text { display: none; } /* icon-only on very small screens */
         }
         @media (prefers-reduced-motion: reduce) {
           .fb-anim, .fb-pulse { animation: none !important; }
@@ -241,7 +267,7 @@ const Navbar = () => {
               padding: '14px 16px',
               borderRadius: '14px',
               boxShadow: '0 10px 28px rgba(0,0,0,0.22)',
-              width: 'min(88vw, 280px)',
+              width: 'min(88vw, 300px)',
               maxWidth: '92vw',
               textAlign: 'left',
               fontSize: '14.5px',
@@ -252,7 +278,7 @@ const Navbar = () => {
             }}
             role="dialog"
             aria-modal="false"
-            aria-label="Workshop signup"
+            aria-label="Upcoming events"
           >
             <div
               style={{
@@ -273,14 +299,13 @@ const Navbar = () => {
                 }}
                 aria-hidden="true"
               >
-                {/* Info icon */}
+                {/* Calendar icon */}
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 8.25a1 1 0 1 0 0-2 1 1 0 0 0 0 2Zm-1.25 2.75h2.5v7h-2.5v-7Z" fill="currentColor"/>
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="0" fill="transparent"/>
+                  <path d="M7 3v2h10V3h2v2h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1V3h2Zm13 6H4v10h16V9Z" fill="currentColor"/>
                 </svg>
               </div>
               <div style={{ fontWeight: 700, fontSize: '15.5px' }}>
-                Free Online Workshop
+                Upcoming Events
               </div>
               <button
                 onClick={() => setInfoOpen(false)}
@@ -301,8 +326,9 @@ const Navbar = () => {
               </button>
             </div>
 
-            <div style={{ color: '#333', lineHeight: 1.4 }}>
-              Learn robotics & coding with FusionBots. Aug 30 @ 11AM EST
+            <div style={{ color: '#333', lineHeight: 1.45 }}>
+              🚀 <strong>Free Robotics & Coding Workshop</strong><br/>
+              Sat, Aug 30 @ 11:00 AM ET
             </div>
 
             <a
@@ -324,7 +350,7 @@ const Navbar = () => {
                 boxShadow: '0 6px 16px rgba(224,74,89,0.35)'
               }}
             >
-              Register Now
+              Register / Learn More
             </a>
           </div>
         )}
@@ -332,8 +358,8 @@ const Navbar = () => {
         {/* Floating button */}
         <button
           onClick={() => setInfoOpen((v) => !v)}
-          aria-label={infoOpen ? 'Hide workshop info' : 'Show workshop info'}
-          className="fb-anim fb-pulse"
+          aria-label={infoOpen ? 'Hide upcoming events' : 'Show upcoming events'}
+          className="fb-anim fb-pulse fb-fab"
           style={{
             pointerEvents: 'auto',
             background: brandGrad,
@@ -342,14 +368,13 @@ const Navbar = () => {
             borderRadius: '999px',
             minWidth: 56,
             height: 56,
-            padding: '0 14px',
+            padding: '0 16px',
             display: 'flex',
             alignItems: 'center',
             gap: 10,
             cursor: 'pointer',
             boxShadow: '0 10px 22px rgba(224,74,89,0.35)',
             animation: 'floatY 4s ease-in-out infinite, pulseRing 3.5s ease-out infinite',
-            // hover/focus feedback
             transition: 'transform 160ms ease, box-shadow 160ms ease'
           }}
           onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)'; }}
@@ -367,14 +392,13 @@ const Navbar = () => {
               placeItems: 'center'
             }}
           >
-            {/* White info icon */}
+            {/* Calendar icon */}
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
-              <path d="M12 7.75a1.25 1.25 0 1 0 0-2.5 1.25 1.25 0 0 0 0 2.5Zm-1.5 3h3v8h-3v-8Z" fill="#fff"/>
-              <circle cx="12" cy="12" r="10.5" stroke="rgba(255,255,255,0.0)" />
+              <path d="M7 3v2h10V3h2v2h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1V3h2Zm13 6H4v10h16V9Z" fill="#fff"/>
             </svg>
           </div>
-          <span style={{ fontWeight: 800, letterSpacing: '.2px' }}>
-            {infoOpen ? 'Close' : 'Info'}
+          <span className="fb-fab-text" style={{ fontWeight: 800, letterSpacing: '.2px' }}>
+            {infoOpen ? 'Close' : 'Upcoming Events'}
           </span>
         </button>
       </div>
@@ -382,4 +406,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;         
+export default Navbar;
