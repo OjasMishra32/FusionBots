@@ -165,7 +165,7 @@ const Hero = () => {
               🛒 Shop STEM Kits
             </a>
             <a href="#about" className="btn btn-secondary">Learn More</a>
-            <a href="https://drive.google.com/file/d/1b8tRulQOgEMv1G4KbCdx4dGDKaKqK929/view?usp=drivesdk" className="btn btn-small">Robotics Curriculum</a>
+            <a href="https://drive.google.com/file/d/1b8tRulQOgEMv1G4KbCdx4dGDKaKqK929/view?usp=drivesdk" className="btn btn-small">Our Curriculum</a>
           </div>
         </div>
 
