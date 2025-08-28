@@ -2,6 +2,7 @@
   padding: 6rem 0;
   background: linear-gradient(to right, #ec4899, #4f46e5, #06b6d4);
   scroll-margin-top: 120px;
+  overflow-x: hidden;
 }
 
 /* Container */
@@ -9,6 +10,7 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  box-sizing: border-box;
 }
 
 /* Header */
@@ -57,7 +59,6 @@
   grid-column: 2; 
 }
 
-
 /* Individual Goal Box */
 .stat-item {
   background: linear-gradient(135deg, #B2EBF2, #E1BEE7);
@@ -66,6 +67,8 @@
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .stat-item:hover {
@@ -98,6 +101,15 @@
   .stat-label {
     font-size: 1rem;
   }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .stats-grid > :nth-child(7) {
+    grid-column: auto;
+  }
 }
 
 /* Fade-in animation */
@@ -124,4 +136,3 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   background: linear-gradient(135deg, #00BCD4, #BA68C8);
 }
-
