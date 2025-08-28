@@ -12,7 +12,6 @@ const Navbar = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
 
-      // Update active link based on scroll position
       const sections = document.querySelectorAll('section[id]');
       let current = '';
       sections.forEach(section => {
@@ -25,21 +24,18 @@ const Navbar = () => {
       if (current) setActiveLink(current);
     };
 
-    // Close mobile menu when clicking outside
     const handleClickOutside = (event) => {
       if (navRef.current && !navRef.current.contains(event.target)) {
         setMenuOpen(false);
       }
     };
 
-    // Close mobile menu on escape key
     const handleEscKey = (event) => {
       if (event.key === 'Escape') {
         setMenuOpen(false);
       }
     };
 
-    // Prevent body scroll when mobile menu is open
     if (menuOpen) {
       document.body.style.overflow = 'hidden';
     } else {
@@ -70,11 +66,10 @@ const Navbar = () => {
   const handleLinkClick = (href) => {
     setMenuOpen(false);
     setActiveLink(href.substring(1));
-    
-    // Smooth scroll to section
+
     const element = document.querySelector(href);
     if (element) {
-      element.scrollIntoView({ 
+      element.scrollIntoView({
         behavior: 'smooth',
         block: 'start'
       });
@@ -83,12 +78,10 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Mobile menu overlay */}
       {menuOpen && <div className="mobile-overlay" onClick={() => setMenuOpen(false)} />}
-      
+
       <nav ref={navRef} className={`navbar ${isScrolled ? 'scrolled' : ''} ${menuOpen ? 'menu-open' : ''}`}>
         <div className="nav-container">
-          {/* Logo Section */}
           <div className="logo-section">
             <a href="https://fusionbots.myshopify.com/" className="logo-link">
               <div className="logo-wrapper">
@@ -99,7 +92,6 @@ const Navbar = () => {
             </a>
           </div>
 
-          {/* Desktop Navigation */}
           <div className="desktop-nav">
             <ul className="nav-links">
               {navLinks.map(({ href, label }) => (
@@ -119,7 +111,6 @@ const Navbar = () => {
             </ul>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             className={`mobile-menu-btn ${menuOpen ? 'active' : ''}`}
             onClick={() => setMenuOpen(!menuOpen)}
@@ -132,7 +123,6 @@ const Navbar = () => {
           </button>
         </div>
 
-        {/* Mobile Navigation Menu */}
         <div className={`mobile-nav ${menuOpen ? 'open' : ''}`}>
           <div className="mobile-nav-content">
             {navLinks.map(({ href, label }) => (
@@ -149,11 +139,10 @@ const Navbar = () => {
                 <span className="mobile-nav-arrow">→</span>
               </a>
             ))}
-            
-            {/* Mobile CTA Button */}
+
             <div className="mobile-cta">
-              <a 
-                href="https://fusionbots.myshopify.com/" 
+              <a
+                href="https://fusionbots.myshopify.com/"
                 className="mobile-cta-btn"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -161,6 +150,27 @@ const Navbar = () => {
                 Shop Now
               </a>
             </div>
+
+            {/* Mobile Social Icons */}
+            <div className="mobile-social-icons">
+              <a
+                href="https://www.linkedin.com/company/fusionbots"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="LinkedIn"
+              >
+                <img src="/linkedin-icon.svg" alt="LinkedIn" className="mobile-social-icon" />
+              </a>
+              <a
+                href="https://www.instagram.com/fusionbots1/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                <img src="/instagram-icon.svg" alt="Instagram" className="mobile-social-icon" />
+              </a>
+            </div>
+
           </div>
         </div>
       </nav>
