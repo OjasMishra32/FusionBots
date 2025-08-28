@@ -8,6 +8,9 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef(null);
 
+  // Floating info button state
+  const [infoOpen, setInfoOpen] = useState(false);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
@@ -33,6 +36,7 @@ const Navbar = () => {
     const handleEscKey = (event) => {
       if (event.key === 'Escape') {
         setMenuOpen(false);
+        setInfoOpen(false);
       }
     };
 
@@ -176,6 +180,67 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
+
+      {/* Floating Info Button */}
+      <div style={{
+        position: 'fixed',
+        bottom: '20px',
+        right: '20px',
+        zIndex: 10000,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end'
+      }}>
+        {infoOpen && (
+          <div style={{
+            background: '#fff',
+            color: '#000',
+            padding: '12px 16px',
+            borderRadius: '10px',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.25)',
+            marginBottom: '10px',
+            width: '220px',
+            textAlign: 'center',
+            fontSize: '14px'
+          }}>
+            <p>🚀 Sign up for our free online workshop!</p>
+            <a
+              href="https://forms.gle/A1TrK2yL871KbCVCA"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                display: 'inline-block',
+                marginTop: '6px',
+                padding: '8px 12px',
+                background: '#7a0e23',
+                color: '#fff',
+                borderRadius: '6px',
+                textDecoration: 'none',
+                fontWeight: 500
+              }}
+            >
+              Register Here
+            </a>
+          </div>
+        )}
+        <button
+          onClick={() => setInfoOpen(!infoOpen)}
+          aria-label="Workshop Info"
+          style={{
+            background: '#ff4757',
+            color: '#fff',
+            fontSize: '20px',
+            border: 'none',
+            borderRadius: '50%',
+            width: '48px',
+            height: '48px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.25)'
+          }}
+        >
+          {!infoOpen ? "!" : "×"}
+        </button>
+      </div>
     </>
   );
 };
