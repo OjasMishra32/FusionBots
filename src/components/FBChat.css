@@ -1,9 +1,9 @@
-/* Root placement — sits ABOVE your bottom-right Events button, but BELOW its popup */
+/* Root placement — positioned up & left so it never blocks Upcoming Events popup */
 .fb-root {
   position: fixed;
-  right: 16px;
-  bottom: 110px;               /* lifts chat so it doesn't overlap the Events button */
-  z-index: 2147483000;         /* lower than Events stack (which we set to 2147483640) */
+  right: 96px;                 /* shift left so it doesn’t overlap Events popup */
+  bottom: 110px;               /* sits above the Events button */
+  z-index: 2147483000;         /* lower than Events popup if needed */
   font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
@@ -75,71 +75,31 @@
 .fb-close:hover { opacity: 1; }
 
 /* Messages */
-.fb-messages {
-  padding: 10px;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.fb-bubble {
-  max-width: 85%;
-  padding: 8px 10px;
-  border-radius: 14px;
-  font-size: 14px;
-  color: #fff;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-}
-.fb-bubble.bot {
-  background: rgba(20,20,28,0.9);
-  border: 1px solid rgba(132,90,255,0.25);
-}
-.fb-bubble.me {
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  margin-left: auto;
-}
+.fb-messages { padding: 10px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+.fb-bubble { max-width: 85%; padding: 8px 10px; border-radius: 14px; font-size: 14px; color: #fff; word-wrap: break-word; white-space: pre-wrap; }
+.fb-bubble.bot { background: rgba(20,20,28,0.9); border: 1px solid rgba(132,90,255,0.25); }
+.fb-bubble.me { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); margin-left: auto; }
 .fb-link { color: #d2d9ff; text-decoration: underline; }
-
 .fb-error { color: #ffb4b4; font-size: 12px; padding: 2px 6px; }
 
 /* Suggestions */
 .fb-suggestions { padding: 6px; }
 .fb-suggest-label { color: rgba(255,255,255,0.7); font-size: 11px; margin-bottom: 6px; }
 .fb-suggest-list { display: flex; flex-wrap: wrap; gap: 6px; }
-.fb-suggest {
-  font-size: 12px; color: #fff;
-  background: rgba(34,37,48,0.7);
-  border: 1px solid rgba(132,90,255,0.35);
-  border-radius: 999px; padding: 6px 10px; cursor: pointer;
-}
+.fb-suggest { font-size: 12px; color: #fff; background: rgba(34,37,48,0.7); border: 1px solid rgba(132,90,255,0.35); border-radius: 999px; padding: 6px 10px; cursor: pointer; }
 .fb-suggest:hover { background: rgba(34,37,48,0.9); }
 
 /* Input bar */
-.fb-inputbar {
-  display: grid; grid-template-columns: 1fr auto; gap: 8px;
-  border-top: 1px solid rgba(255,255,255,0.1);
-  padding: 10px;
-}
-.fb-textarea {
-  resize: none; min-height: 40px; max-height: 120px;
-  background: rgba(20,20,28,0.85);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 12px; color: #fff; padding: 8px 10px; outline: none;
-}
+.fb-inputbar { display: grid; grid-template-columns: 1fr auto; gap: 8px; border-top: 1px solid rgba(255,255,255,0.1); padding: 10px; }
+.fb-textarea { resize: none; min-height: 40px; max-height: 120px; background: rgba(20,20,28,0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; color: #fff; padding: 8px 10px; outline: none; }
 .fb-textarea:focus { border-color: rgba(200,200,255,0.35); }
-.fb-send {
-  padding: 0 14px; border-radius: 12px; border: 0; color: #fff; cursor: pointer;
-  background: linear-gradient(135deg, #645cff, #8a5cf7, #5ec8ff);
-  transition: filter .15s ease;
-}
+.fb-send { padding: 0 14px; border-radius: 12px; border: 0; color: #fff; cursor: pointer; background: linear-gradient(135deg, #645cff, #8a5cf7, #5ec8ff); transition: filter .15s ease; }
 .fb-send:disabled { filter: grayscale(0.6); cursor: not-allowed; }
 
-/* MOBILE: keep chat above Events but give a bit more breathing room */
+/* Mobile tweak: still above Events, but closer in */
 @media (max-width: 768px) {
   .fb-root {
-    right: 12px;
-    bottom: 96px;              /* slightly tighter on phones, still above Events */
+    right: 80px;               /* shift left slightly for small screens */
+    bottom: 96px;
   }
 }
