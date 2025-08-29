@@ -1,19 +1,20 @@
 /* =========================
    FusionBots Chat Styles (scoped)
-   - Desktop: compact FAB
-   - Mobile: circular icon ONLY, to the LEFT of Upcoming Events (bottom-right)
+   - Desktop: compact FAB (left of Events)
+   - Mobile: circular icon ONLY, placed slightly ABOVE Upcoming Events at bottom-right
    - Smooth autohide after decent scroll (paired with .fb-hidden in JSX)
    ========================= */
 
 :root{
-  /* Desktop/tablet: sit left of Events (adjust if needed) */
-  --events-offset: 230px;
+  /* Desktop/tablet placement: sit left of Events (adjust if needed) */
+  --events-offset: 230px;      /* smaller => closer to right edge */
   --desktop-bottom: 18px;
 
-  /* Mobile: Events sits at the far right; chat sits to its LEFT */
-  --mobile-edge: 16px;        /* distance from screen edges on phones */
-  --events-width: 170px;      /* ≈ mobile width of your Upcoming Events button */
-  --side-gap: 12px;           /* gap between chat and Events */
+  /* Mobile placement: Events at right-bottom; chat sits ABOVE it on the right */
+  --mobile-edge: 16px;         /* distance from screen edges on phones */
+  --events-height: 56px;       /* ≈ mobile height of your Upcoming Events button */
+  --stack-gap: 12px;           /* gap between top of Events and bottom of chat circle */
+  --extra-lift: 8px;           /* tiny extra lift so they never touch */
 }
 
 /* ---------------- Base placement (desktop/tablet) ---------------- */
@@ -115,17 +116,18 @@
 .fb-root .fb-send:disabled{ filter:grayscale(.6); cursor:not-allowed; }
 
 /* ---------------- Mobile layout ----------------
-   Chat = small CIRCLE, ICON-ONLY, to the LEFT of Upcoming Events (bottom-right)
-   Absolutely NO text in the button on mobile
+   Chat = small CIRCLE, ICON-ONLY, placed slightly ABOVE Upcoming Events (bottom-right)
+   Absolutely no text in the button on mobile
 ------------------------------------------------- */
 @media (max-width: 768px){
-  /* Place chat to the LEFT of the right-edge Events button */
+  /* Place chat on the RIGHT, slightly ABOVE Events:
+     bottom = events height + gap + tiny lift */
   .fb-root{
-    right: calc(var(--mobile-edge) + var(--events-width) + var(--side-gap));
-    bottom: var(--mobile-edge);
+    right: var(--mobile-edge);
+    bottom: calc(var(--events-height) + var(--stack-gap) + var(--extra-lift));
   }
 
-  /* Circle FAB: icon-only, perfectly centered */
+  /* Circle FAB: icon-only & perfectly centered */
   .fb-root .fb-fab{
     height: 52px !important;
     width:  52px !important;
@@ -137,7 +139,7 @@
     overflow: hidden !important;
   }
 
-  /* FORCE-HIDE ALL TEXT ON MOBILE */
+  /* FORCE-HIDE ALL TEXT ON MOBILE (icon only) */
   .fb-root .fb-fab-text,
   .fb-root .fb-fab-title,
   .fb-root .fb-fab-sub,
@@ -145,7 +147,7 @@
     display: none !important;
   }
 
-  /* Center the 🤖 emoji perfectly inside the circle */
+  /* Center the 🤖 emoji inside the circle */
   .fb-root .fb-fab-icon{
     width: 30px !important;
     height: 30px !important;
@@ -157,7 +159,7 @@
     border-radius: 999px !important;
   }
 
-  /* Tight, readable panel on phones */
+  /* Phone panel: tighter */
   .fb-root .fb-panel{
     width: min(92vw, 330px);
     height: min(62vh, 520px);
