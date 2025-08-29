@@ -1,117 +1,147 @@
-/* === Chat sits just to the LEFT of the bottom-right "Upcoming Events" button ===
-   Tweak --events-offset to scoot it even closer to the right if you like.
-*/
+/* =========================
+   FusionBots Chat Styles
+   - Smaller desktop button
+   - Mobile: circular icon, bottom-right ABOVE Upcoming Events
+   - Smooth autohide animation after a decent scroll
+   ========================= */
 
-:root {
-  /* distance from the right edge; set close to your Events button width */
-  --events-offset: 230px;   /* smaller value => closer to the right */
+:root{
+  /* Desktop/tablet: space from right edge to sit left of Events button */
+  --events-offset: 230px;              /* smaller value => closer to the right */
+  --desktop-bottom: 18px;
+
+  /* Mobile stacking: place chat ABOVE the Events button on bottom-right */
+  --mobile-edge: 16px;                 /* padding from edges on phones */
+  --events-height: 56px;               /* approx height of your Events button */
+  --stack-gap: 12px;                   /* gap between chat and Events */
 }
 
-.fb-root {
+/* ---------------- Base placement (desktop/tablet) ---------------- */
+.fb-root{
   position: fixed;
   right: var(--events-offset);
-  bottom: 18px;
+  bottom: var(--desktop-bottom);
   z-index: 2147483000;
-  /* smooth modern motion */
   transition:
     opacity .32s cubic-bezier(.2,.7,.2,1),
     transform .32s cubic-bezier(.2,.7,.2,1),
     filter .32s cubic-bezier(.2,.7,.2,1);
   will-change: transform, opacity, filter;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-family: system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
 
-/* Animated autohide on scroll: gentle slide down + fade + blur + slight scale */
-.fb-hidden {
+/* Animated autohide on scroll (set by .fb-hidden in JSX) */
+.fb-hidden{
   opacity: 0;
   transform: translateY(20px) scale(.97);
   filter: blur(6px);
   pointer-events: none;
 }
 
-/* Compact floating button */
-.fb-fab {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  height: 48px;
-  padding: 0 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(20,22,28,0.92);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  cursor: pointer;
-  box-shadow: 0 10px 30px rgba(20, 20, 40, 0.35);
-  transition: transform .18s ease;
-  z-index: 2147483001;
+/* ---------------- Smaller FAB (desktop/tablet) ---------------- */
+.fb-fab{
+  display:flex; align-items:center; gap:8px;
+  height:44px;                 /* smaller than before */
+  padding:0 10px;              /* tighter */
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);
+  background:rgba(20,22,28,.92);
+  backdrop-filter:blur(8px);
+  color:#fff; cursor:pointer;
+  box-shadow:0 10px 30px rgba(20,20,40,.35);
+  transition:transform .18s ease;
+  z-index:2147483001;
 }
-.fb-fab:hover { transform: translateY(-1px); }
-.fb-fab:active { transform: translateY(0); }
+.fb-fab:hover{ transform:translateY(-1px); }
+.fb-fab:active{ transform:translateY(0); }
 
-.fb-fab-icon {
-  display: grid; place-items: center;
-  width: 30px; height: 30px;
-  border-radius: 999px;
-  border: 1px solid rgba(132,90,255,0.45);
-  background: linear-gradient(180deg, rgba(55, 0, 255, 0.25), rgba(150, 0, 255, 0.15));
-  font-size: 16px;
+.fb-fab-icon{
+  display:grid; place-items:center;
+  width:26px; height:26px;    /* smaller icon container */
+  border-radius:999px;
+  border:1px solid rgba(132,90,255,.45);
+  background:linear-gradient(180deg, rgba(55,0,255,.25), rgba(150,0,255,.15));
+  font-size:14px;
 }
-.fb-fab-title { font-weight: 700; font-size: 12px; line-height: 1; }
-.fb-fab-sub { font-size: 10px; opacity: .7; }
+.fb-fab-title{ font-weight:700; font-size:12px; line-height:1; }
+.fb-fab-sub{ font-size:10px; opacity:.7; }
 
-/* Panel */
-.fb-panel {
-  margin-top: 10px;
-  width: min(90vw, 340px);
-  height: min(65vh, 560px);
-  display: grid;
-  grid-template-rows: auto 1fr auto;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.12);
-  background: radial-gradient(1200px 500px at 80% -50%, rgba(120, 119, 198, 0.18), transparent 60%),
-              radial-gradient(1000px 400px at 20% 120%, rgba(0, 212, 255, 0.15), transparent 55%),
-              rgba(12,14,20,0.95);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 20px 50px rgba(16, 16, 40, 0.6);
-  z-index: 2147483002;
+/* ---------------- Panel ---------------- */
+.fb-panel{
+  margin-top:10px;
+  width:min(90vw, 340px);
+  height:min(65vh, 560px);
+  display:grid; grid-template-rows:auto 1fr auto;
+  border-radius:16px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.12);
+  background:
+    radial-gradient(1200px 500px at 80% -50%, rgba(120,119,198,.18), transparent 60%),
+    radial-gradient(1000px 400px at 20% 120%, rgba(0,212,255,.15), transparent 55%),
+    rgba(12,14,20,.95);
+  backdrop-filter:blur(10px);
+  box-shadow:0 20px 50px rgba(16,16,40,.6);
+  z-index:2147483002;
 }
 
 /* Header */
-.fb-header { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.1); }
-.fb-header-left { display: flex; align-items: center; gap: 8px; color: #fff; }
-.fb-logo { width: 28px; height: 28px; border-radius: 10px; display: grid; place-items: center; border: 1px solid rgba(132,90,255,0.4); background: linear-gradient(180deg, rgba(55,0,255,0.25), rgba(150,0,255,0.15)); font-size: 14px; }
-.fb-header-title { font-size: 13px; font-weight: 700; }
-.fb-header-sub { font-size: 10px; opacity: .7; }
-.fb-close { color: #fff; opacity: .7; background: transparent; border: 0; cursor: pointer; font-size: 16px; }
-.fb-close:hover { opacity: 1; }
+.fb-header{ display:flex; align-items:center; justify-content:space-between; padding:8px 10px; border-bottom:1px solid rgba(255,255,255,.1); }
+.fb-header-left{ display:flex; align-items:center; gap:8px; color:#fff; }
+.fb-logo{ width:28px; height:28px; border-radius:10px; display:grid; place-items:center; border:1px solid rgba(132,90,255,.4); background:linear-gradient(180deg, rgba(55,0,255,.25), rgba(150,0,255,.15)); font-size:14px; }
+.fb-header-title{ font-size:13px; font-weight:700; }
+.fb-header-sub{ font-size:10px; opacity:.7; }
+.fb-close{ color:#fff; opacity:.7; background:transparent; border:0; cursor:pointer; font-size:16px; }
+.fb-close:hover{ opacity:1; }
 
 /* Messages */
-.fb-messages { padding: 8px; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; }
-.fb-bubble { max-width: 85%; padding: 7px 9px; border-radius: 12px; font-size: 13px; color: #fff; word-wrap: break-word; white-space: pre-wrap; }
-.fb-bubble.bot { background: rgba(20,20,28,0.9); border: 1px solid rgba(132,90,255,0.25); }
-.fb-bubble.me  { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); margin-left: auto; }
-.fb-link { color: #d2d9ff; text-decoration: underline; }
-.fb-error { color: #ffb4b4; font-size: 12px; padding: 2px 6px; }
+.fb-messages{ padding:8px; overflow-y:auto; display:flex; flex-direction:column; gap:6px; }
+.fb-bubble{ max-width:85%; padding:7px 9px; border-radius:12px; font-size:13px; color:#fff; word-wrap:break-word; white-space:pre-wrap; }
+.fb-bubble.bot{ background:rgba(20,20,28,.9); border:1px solid rgba(132,90,255,.25); }
+.fb-bubble.me{ background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.12); margin-left:auto; }
+.fb-link{ color:#d2d9ff; text-decoration:underline; }
+.fb-error{ color:#ffb4b4; font-size:12px; padding:2px 6px; }
 
 /* Suggestions */
-.fb-suggestions { padding: 6px 4px; }
-.fb-suggest-label { color: rgba(255,255,255,0.7); font-size: 10px; margin-bottom: 6px; }
-.fb-suggest-list { display: flex; flex-wrap: wrap; gap: 6px; }
-.fb-suggest { font-size: 11px; color: #fff; background: rgba(34,37,48,0.7); border: 1px solid rgba(132,90,255,0.35); border-radius: 999px; padding: 5px 9px; cursor: pointer; }
-.fb-suggest:hover { background: rgba(34,37,48,0.9); }
+.fb-suggestions{ padding:6px 4px; }
+.fb-suggest-label{ color:rgba(255,255,255,.7); font-size:10px; margin-bottom:6px; }
+.fb-suggest-list{ display:flex; flex-wrap:wrap; gap:6px; }
+.fb-suggest{ font-size:11px; color:#fff; background:rgba(34,37,48,.7); border:1px solid rgba(132,90,255,.35); border-radius:999px; padding:5px 9px; cursor:pointer; }
+.fb-suggest:hover{ background:rgba(34,37,48,.9); }
 
 /* Input bar */
-.fb-inputbar { display: grid; grid-template-columns: 1fr auto; gap: 6px; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px; }
-.fb-textarea { resize: none; min-height: 36px; max-height: 110px; background: rgba(20,20,28,0.85); border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; color: #fff; padding: 7px 9px; outline: none; font-size: 13px; }
-.fb-textarea:focus { border-color: rgba(200,200,255,0.35); }
-.fb-send { padding: 0 12px; border-radius: 10px; border: 0; color: #fff; cursor: pointer; background: linear-gradient(135deg, #645cff, #8a5cf7, #5ec8ff); transition: filter .15s ease; height: 36px; font-size: 13px; font-weight: 600; }
-.fb-send:disabled { filter: grayscale(0.6); cursor: not-allowed; }
+.fb-inputbar{ display:grid; grid-template-columns:1fr auto; gap:6px; border-top:1px solid rgba(255,255,255,.1); padding:8px; }
+.fb-textarea{ resize:none; min-height:36px; max-height:110px; background:rgba(20,20,28,.85); border:1px solid rgba(255,255,255,.12); border-radius:10px; color:#fff; padding:7px 9px; outline:none; font-size:13px; }
+.fb-textarea:focus{ border-color:rgba(200,200,255,.35); }
+.fb-send{ padding:0 12px; border-radius:10px; border:0; color:#fff; cursor:pointer; background:linear-gradient(135deg,#645cff,#8a5cf7,#5ec8ff); transition:filter .15s ease; height:36px; font-size:13px; font-weight:600; }
+.fb-send:disabled{ filter:grayscale(.6); cursor:not-allowed; }
 
-/* Small screens: if your Events button is wide, keep distance but allow tighter fit */
-@media (max-width: 768px) {
-  :root { --events-offset: 200px; } /* still near the right, but with some breathing room */
-  .fb-panel { width: min(92vw, 330px); height: min(62vh, 520px); }
-  .fb-fab   { height: 46px; padding: 0 10px; }
+/* ---------------- Mobile layout ----------------
+   - Put chat ABOVE Upcoming Events in bottom-right
+   - Make FAB a small circle (icon-only), no text, not cut off
+------------------------------------------------- */
+@media (max-width: 768px){
+  /* Position above Events (no overlap, no cutoff) */
+  .fb-root{
+    right: var(--mobile-edge);
+    bottom: calc(var(--events-height) + var(--stack-gap));
+  }
+
+  /* Circle FAB: icon-only */
+  .fb-fab{
+    height: 52px;
+    width: 52px;
+    padding: 0;
+    border-radius: 999px;
+    justify-content: center;
+  }
+  .fb-fab-icon{
+    width: 30px; height: 30px; font-size: 16px;
+  }
+  /* Hide text on mobile to keep it compact */
+  .fb-fab-title, .fb-fab-sub{ display: none; }
+
+  /* Panel size a bit tighter on phones */
+  .fb-panel{
+    width: min(92vw, 330px);
+    height: min(62vh, 520px);
+  }
 }
