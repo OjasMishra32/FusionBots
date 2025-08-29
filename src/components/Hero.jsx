@@ -188,11 +188,7 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Fixed-position Upcoming Events button that won’t overlap the chat */}
-      <a href="#events" className="upcoming-events" aria-label="Upcoming Events">
-        {/* You can keep your existing icon markup here if you have it */}
-        Upcoming Events
-      </a>
+    
 
       {/* Chatbot (fixed to viewport) */}
       <FBChat apiPath="/api/fusionbots-chat" brand="FusionBots" />
