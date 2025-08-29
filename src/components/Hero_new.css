@@ -687,4 +687,11 @@
   100% {
     background-position: 0% center;
   }
+ /* Ensure Upcoming Events (button + popup) always overlays the chat */
+.upcoming-events,
+.upcoming-events * {
+  position: relative;
+  z-index: 2147483640 !important; /* higher than chat */
+}
+
 }
