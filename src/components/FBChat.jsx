@@ -2,11 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./FBChat.css";
 
 /**
- * FusionBots AI Chat (vanilla CSS, no Tailwind)
- * - Floating button + panel
- * - Mobile friendly
- * - RAG-lite over FAQs (optional)
- * - Calls your serverless endpoint at /api/fusionbots-chat
+ * FusionBots AI Chat — compact, auto-hide on scroll, positioned left of Events button
+ * - apiPath: POST endpoint returning { answer }
+ * - faqs: optional fallback/context
  */
 
 export default function FBChat({
@@ -30,12 +28,32 @@ export default function FBChat({
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
+  const [hidden, setHidden] = useState(false); // auto-hide on scroll
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem("fb_chat");
     return saved
       ? JSON.parse(saved)
       : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about robotics kits, curriculum, or workshops.` }];
   });
+
+  // hide on scroll (debounced)
+  useEffect(() => {
+    let t;
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      // hide immediately when scrolling
+      setHidden(true);
+      clearTimeout(t);
+      // show again after scrolling stops for 350ms
+      t = setTimeout(() => setHidden(false), 350);
+      lastY = window.scrollY;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      clearTimeout(t);
+    };
+  }, []);
 
   const listRef = useRef(null);
   useEffect(() => {
@@ -100,7 +118,7 @@ export default function FBChat({
   }
 
   return (
-    <div className="fb-root">
+    <div className={`fb-root ${hidden ? "fb-hidden" : ""}`}>
       {/* FAB */}
       <button className="fb-fab" aria-label="Open chat" onClick={() => setOpen(v => !v)}>
         <span className="fb-fab-icon">🤖</span>
@@ -131,7 +149,6 @@ export default function FBChat({
             ))}
             {error && <div className="fb-error">{error}</div>}
 
-            {/* Suggestions until first user message */}
             {!messages.some(m => m.role === "user") && starterTips?.length > 0 && (
               <div className="fb-suggestions">
                 <div className="fb-suggest-label">Try one:</div>
@@ -177,7 +194,7 @@ export default function FBChat({
 
 // --- helpers ---
 function systemPrompt(brand) {
-  return `You are the ${brand} website assistant. Be concise, friendly, and factual about robotics education, workshops, kits, and simulators. 
+  return `You are the ${brand} website assistant. Be concise, friendly, and factual about robotics education, workshops, kits, and simulators.
 If unsure, say you're not sure and suggest contacting ojasvamishra32@gmail.com. Prefer clear steps, links, and sign-up instructions.`;
 }
 
