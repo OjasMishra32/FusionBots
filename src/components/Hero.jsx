@@ -6,6 +6,23 @@ import fusionBotDog from '../assets/dog.png';
 const Hero = () => {
   const particlesRef = useRef(null);
 
+import FBChat from "./components/FBChat";
+function App() {
+  return (
+    <>
+      {/* ...your existing homepage... */}
+      <FBChat
+        // If you later deploy a different API path, update here:
+        apiPath="/api/fusionbots-chat"
+        brand="FusionBots"
+      />
+    </>
+  );
+}
+
+export default App;
+
+
   useEffect(() => {
     const createParticles = () => {
       if (particlesRef.current) {
