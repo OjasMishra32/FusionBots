@@ -2,9 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./FBChat.css";
 
 /**
- * FusionBots AI Chat — compact, auto-hide on scroll, positioned left of Events button
- * - apiPath: POST endpoint returning { answer }
- * - faqs: optional fallback/context
+ * FusionBots AI Chat — compact, autohide after meaningful scroll, positioned left of Events button
  */
 
 export default function FBChat({
@@ -28,7 +26,7 @@ export default function FBChat({
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(null);
-  const [hidden, setHidden] = useState(false); // auto-hide on scroll
+  const [hidden, setHidden] = useState(false); // animated autohide
   const [messages, setMessages] = useState(() => {
     const saved = localStorage.getItem("fb_chat");
     return saved
@@ -36,22 +34,30 @@ export default function FBChat({
       : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about robotics kits, curriculum, or workshops.` }];
   });
 
-  // hide on scroll (debounced)
+  // Autohide after a "decent" scroll (threshold), then reveal after scrolling stops
   useEffect(() => {
-    let t;
-    let lastY = window.scrollY;
+    let revealTimer;
+    let lastShownAtY = window.scrollY;
+
+    const THRESHOLD = 150; // px scrolled before hiding
+    const REVEAL_DELAY = 380; // ms after scroll stops
+
     const onScroll = () => {
-      // hide immediately when scrolling
-      setHidden(true);
-      clearTimeout(t);
-      // show again after scrolling stops for 350ms
-      t = setTimeout(() => setHidden(false), 350);
-      lastY = window.scrollY;
+      const y = window.scrollY;
+      if (Math.abs(y - lastShownAtY) > THRESHOLD) {
+        setHidden(true);
+      }
+      clearTimeout(revealTimer);
+      revealTimer = setTimeout(() => {
+        setHidden(false);
+        lastShownAtY = window.scrollY; // reset baseline once shown again
+      }, REVEAL_DELAY);
     };
+
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("scroll", onScroll);
-      clearTimeout(t);
+      clearTimeout(revealTimer);
     };
   }, []);
 
@@ -109,7 +115,6 @@ export default function FBChat({
     } catch (e) {
       console.error(e);
       setError("Couldn’t reach the AI service. Showing FAQ-based help.");
-      // Fallback: FAQ answer blob
       const fallback = context ? context.replaceAll("\n\n", "\n") : "Please try again later or email ojasvamishra32@gmail.com.";
       setMessages(m => [...m, { role: "assistant", content: fallback }]);
     } finally {
