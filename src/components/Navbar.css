@@ -447,3 +447,55 @@
     outline: 2px solid;
   }
 }
+
+/* ========= Upcoming Events FAB (desktop: pill with text; mobile: circle icon-only) ========= */
+
+/* Base (desktop/tablet): keep pill with text */
+.events-fab {
+  transition: transform 160ms ease, box-shadow 160ms ease;
+  /* animation hooks are set inline in JSX if desired */
+}
+.events-fab-icon {
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.18);
+  display: grid;
+  place-items: center;
+}
+.events-fab-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor; /* inherits from button color (white) */
+}
+.events-fab-text {
+  display: inline; /* desktop shows label */
+  white-space: nowrap;
+}
+
+/* Mobile: force circular icon-only button (no text overflow, centered icon) */
+@media (max-width: 768px) {
+  .events-fab {
+    width: 56px !important;
+    min-width: 56px !important;
+    height: 56px !important;
+    padding: 0 !important;
+    border-radius: 999px !important;
+    display: inline-flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    gap: 0 !important;
+    overflow: hidden !important;
+  }
+  .events-fab-text {
+    display: none !important; /* hide label on phones */
+  }
+  .events-fab-icon {
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+  }
+}
