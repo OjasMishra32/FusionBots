@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./FBChat.css";
 
 /**
- * FusionBots AI Chat — compact, autohide after meaningful scroll, positioned left of Events button
+ * FusionBots AI Chat — compact, autohide after meaningful scroll
  */
 
 export default function FBChat({
@@ -34,23 +34,21 @@ export default function FBChat({
       : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about robotics kits, curriculum, or workshops.` }];
   });
 
-  // Autohide after a "decent" scroll (threshold), then reveal after scrolling stops
+  // Autohide after a "decent" scroll, reveal with a professional delay
   useEffect(() => {
     let revealTimer;
     let lastShownAtY = window.scrollY;
 
-    const THRESHOLD = 150; // px scrolled before hiding
-    const REVEAL_DELAY = 380; // ms after scroll stops
+    const THRESHOLD = 140; // px scrolled before we hide
+    const REVEAL_DELAY = 900; // ms after scroll stops before showing again
 
     const onScroll = () => {
       const y = window.scrollY;
-      if (Math.abs(y - lastShownAtY) > THRESHOLD) {
-        setHidden(true);
-      }
+      if (Math.abs(y - lastShownAtY) > THRESHOLD) setHidden(true);
       clearTimeout(revealTimer);
       revealTimer = setTimeout(() => {
         setHidden(false);
-        lastShownAtY = window.scrollY; // reset baseline once shown again
+        lastShownAtY = window.scrollY;
       }, REVEAL_DELAY);
     };
 
