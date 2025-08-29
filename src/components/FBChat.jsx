@@ -31,14 +31,14 @@ export default function FBChat({
     const saved = localStorage.getItem("fb_chat");
     return saved
       ? JSON.parse(saved)
-      : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about kits, parterships, or workshops!` }];
+      : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about robotics kits, curriculum, or workshops.` }];
   });
 
   // Autohide after a "decent" scroll, then reveal with a professional delay
   useEffect(() => {
     let revealTimer;
     let lastShownAtY = window.scrollY;
-    const THRESHOLD = 140;  // px moved before hiding
+    const THRESHOLD = 140;   // px moved before hiding
     const REVEAL_DELAY = 900; // ms to wait after scroll ends
 
     const onScroll = () => {
@@ -149,17 +149,24 @@ export default function FBChat({
           <div className="fb-messages" ref={listRef}>
             {messages.map((m, i) => (
               <div key={i} className={`fb-row ${m.role === "user" ? "me" : "bot"}`}>
-                {m.role !== "user" && <div className="fb-avatar">🤖</div>}
+                {m.role !== "user" && <div className="fb-avatar" aria-label="Assistant">🤖</div>}
                 <div className={`fb-bubble ${m.role === "user" ? "me" : "bot"}`}>
                   {linkify(m.content)}
                 </div>
-                {m.role === "user" && <div className="fb-avatar you">You</div>}
+                {m.role === "user" && (
+                  <div className="fb-avatar you" aria-label="You">
+                    {/* Person icon (SVG) */}
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d="M12 12c2.76 0 5-2.24 5-5S14.76 2 12 2 7 4.24 7 7s2.24 5 5 5zm0 2c-4.42 0-8 2.24-8 5v1h16v-1c0-2.76-3.58-5-8-5z"/>
+                    </svg>
+                  </div>
+                )}
               </div>
             ))}
 
             {busy && (
               <div className="fb-row bot typing-row">
-                <div className="fb-avatar">🤖</div>
+                <div className="fb-avatar" aria-label="Assistant">🤖</div>
                 <div className="fb-bubble bot typing">
                   <span className="dots"><i></i><i></i><i></i></span>
                 </div>
@@ -191,7 +198,7 @@ export default function FBChat({
             <textarea
               className="fb-textarea"
               value={input}
-              placeholder="Ask me anything!"
+              placeholder="Ask about workshops, kits, events, partnerships…"
               rows={1}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => {
