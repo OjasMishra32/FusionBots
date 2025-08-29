@@ -31,7 +31,7 @@ export default function FBChat({
     const saved = localStorage.getItem("fb_chat");
     return saved
       ? JSON.parse(saved)
-      : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about robotics kits, curriculum, or workshops.` }];
+      : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about kits, parterships, or workshops!` }];
   });
 
   // Autohide after a "decent" scroll, then reveal with a professional delay
