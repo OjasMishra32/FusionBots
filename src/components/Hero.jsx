@@ -3,7 +3,6 @@ import './Hero.css';
 import './Hero_new.css';
 import fusionBotDog from '../assets/dog.png';
 
-// ✅ If Hero.jsx is in src/components, FBChat is sibling → use "./FBChat"
 import FBChat from './FBChat';
 
 const Hero = () => {
@@ -189,7 +188,13 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* ✅ Chatbot (fixed-position; shows on this page) */}
+      {/* Fixed-position Upcoming Events button that won’t overlap the chat */}
+      <a href="#events" className="upcoming-events" aria-label="Upcoming Events">
+        {/* You can keep your existing icon markup here if you have it */}
+        Upcoming Events
+      </a>
+
+      {/* Chatbot (fixed to viewport) */}
       <FBChat apiPath="/api/fusionbots-chat" brand="FusionBots" />
     </>
   );
