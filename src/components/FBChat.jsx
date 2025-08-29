@@ -175,7 +175,7 @@ export default function FBChat({
             <textarea
               className="fb-textarea"
               value={input}
-              placeholder="Ask about workshops, kits, events, partnerships…"
+              placeholder="Ask about us about anything!"
               rows={1}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => {
