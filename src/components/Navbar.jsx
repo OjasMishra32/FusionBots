@@ -8,10 +8,10 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef(null);
 
-  // Floating info button state (with animated mount)
+  // Floating info (Upcoming Events) popup
   const [infoOpen, setInfoOpen] = useState(false);
-  const [popupMounted, setPopupMounted] = useState(false);  // controls presence in DOM
-  const [popupShow, setPopupShow] = useState(false);        // drives opacity/transform for smooth animation
+  const [popupMounted, setPopupMounted] = useState(false);
+  const [popupShow, setPopupShow] = useState(false);
 
   // Mount/unmount flow for smooth open/close
   useEffect(() => {
@@ -36,9 +36,9 @@ const Navbar = () => {
       const sections = document.querySelectorAll('section[id]');
       let current = '';
       sections.forEach(section => {
-        const sectionTop = section.getBoundingClientRect().top;
+        const rectTop = section.getBoundingClientRect().top;
         const sectionHeight = section.offsetHeight;
-        if (sectionTop <= 150 && sectionTop + sectionHeight > 150) {
+        if (rectTop <= 150 && rectTop + sectionHeight > 150) {
           current = section.getAttribute('id');
         }
       });
@@ -93,7 +93,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Inline keyframes + responsive helpers (keeps label visible on mobile) */}
+      {/* Only keep shared keyframes here — no chat styles to avoid conflicts */}
       <style>{`
         @keyframes floatY {
           0% { transform: translateY(0); }
@@ -104,30 +104,6 @@ const Navbar = () => {
           0% { box-shadow: 0 0 0 0 rgba(224,74,89,0.35); }
           70% { box-shadow: 0 0 0 12px rgba(224,74,89,0); }
           100% { box-shadow: 0 0 0 0 rgba(224,74,89,0); }
-        }
-        @keyframes fbPopIn {
-          0%   { opacity: 0; transform: translateY(12px) scale(0.96); }
-          60%  { opacity: 1; transform: translateY(-2px) scale(1.015); }
-          100% { opacity: 1; transform: translateY(0)    scale(1); }
-        }
-        @keyframes fbPopOut {
-          0%   { opacity: 1; transform: translateY(0)    scale(1); }
-          100% { opacity: 0; transform: translateY(8px)  scale(0.985); }
-        }
-        .fb-fab { font-weight: 800; letter-spacing: .2px; white-space: nowrap; }
-        .fb-fab .fb-fab-text { display: inline !important; } /* ensure visible on mobile */
-
-        /* Tweak size on small screens but KEEP the text */
-        @media (max-width: 480px) {
-          .fb-fab { font-size: 13px; padding: 0 12px !important; height: 52px !important; }
-        }
-        @media (max-width: 360px) {
-          .fb-fab { font-size: 12.5px; padding: 0 10px !important; height: 50px !important; }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          .fb-anim, .fb-pulse { animation: none !important; }
-          .fb-transition { transition: none !important; }
         }
       `}</style>
 
@@ -230,7 +206,7 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Floating Info Button + Animated Popup */}
+      {/* Floating Upcoming Events (button + popup) */}
       <div
         style={{
           position: 'fixed',
@@ -245,10 +221,10 @@ const Navbar = () => {
         }}
         aria-live="polite"
       >
-        {/* Popup (smooth fade/scale) */}
+        {/* Popup card */}
         {popupMounted && (
           <div
-            className="fb-transition"
+            className="events-popup"
             style={{
               pointerEvents: 'auto',
               background: '#ffffff',
@@ -344,11 +320,11 @@ const Navbar = () => {
           </div>
         )}
 
-        {/* Floating button */}
+        {/* Floating Events button (desktop = text pill, mobile = circle icon) */}
         <button
           onClick={() => setInfoOpen((v) => !v)}
           aria-label={infoOpen ? 'Hide upcoming events' : 'Show upcoming events'}
-          className="fb-anim fb-pulse fb-fab"
+          className="events-fab"
           style={{
             pointerEvents: 'auto',
             background: brandGrad,
@@ -363,30 +339,19 @@ const Navbar = () => {
             gap: 10,
             cursor: 'pointer',
             boxShadow: '0 10px 22px rgba(224,74,89,0.35)',
-            animation: 'floatY 4s ease-in-out infinite, pulseRing 3.5s ease-out infinite',
-            transition: 'transform 160ms ease, box-shadow 160ms ease'
           }}
           onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)'; }}
           onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; }}
           onFocus={(e) => { e.currentTarget.style.transform = 'translateY(-2px) scale(1.03)'; }}
           onBlur={(e) => { e.currentTarget.style.transform = 'translateY(0) scale(1)'; }}
         >
-          <div
-            aria-hidden="true"
-            style={{
-              width: 28, height: 28, minWidth: 28,
-              borderRadius: '50%',
-              background: 'rgba(255,255,255,0.18)',
-              display: 'grid',
-              placeItems: 'center'
-            }}
-          >
-            {/* Calendar icon */}
+          <span className="events-fab-icon" aria-hidden="true">
+            {/* Calendar icon (inherits white) */}
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
               <path d="M7 3v2h10V3h2v2h1a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h1V3h2Zm13 6H4v10h16V9Z" fill="#fff"/>
             </svg>
-          </div>
-          <span className="fb-fab-text" style={{ fontWeight: 800, letterSpacing: '.2px' }}>
+          </span>
+          <span className="events-fab-text" style={{ fontWeight: 800, letterSpacing: '.2px', whiteSpace: 'nowrap' }}>
             {infoOpen ? 'Close' : 'Upcoming Events'}
           </span>
         </button>
