@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import "./FBChat.css";
 
 /**
- * FusionBots AI Chat — compact, autohide after meaningful scroll
+ * FusionBots AI Chat — modern UI, autohide after meaningful scroll with delayed reveal
  */
 
 export default function FBChat({
@@ -34,13 +34,12 @@ export default function FBChat({
       : [{ role: "assistant", content: `Hi! I’m the ${brand} assistant. Ask me anything about robotics kits, curriculum, or workshops.` }];
   });
 
-  // Autohide after a "decent" scroll, reveal with a professional delay
+  // Autohide after a "decent" scroll, then reveal with a professional delay
   useEffect(() => {
     let revealTimer;
     let lastShownAtY = window.scrollY;
-
-    const THRESHOLD = 140; // px scrolled before we hide
-    const REVEAL_DELAY = 900; // ms after scroll stops before showing again
+    const THRESHOLD = 140;  // px moved before hiding
+    const REVEAL_DELAY = 900; // ms to wait after scroll ends
 
     const onScroll = () => {
       const y = window.scrollY;
@@ -124,7 +123,7 @@ export default function FBChat({
     <div className={`fb-root ${hidden ? "fb-hidden" : ""}`}>
       {/* FAB */}
       <button className="fb-fab" aria-label="Open chat" onClick={() => setOpen(v => !v)}>
-        <span className="fb-fab-icon">🤖</span>
+        <span className="fb-fab-icon" aria-hidden>🤖</span>
         <div className="fb-fab-text">
           <div className="fb-fab-title">Chat with {brand}</div>
           <div className="fb-fab-sub">AI answers • 24/7</div>
@@ -133,12 +132,15 @@ export default function FBChat({
 
       {open && (
         <div className="fb-panel">
+          <div className="fb-panel-gradient" aria-hidden />
           <div className="fb-header">
             <div className="fb-header-left">
               <div className="fb-logo">🤖</div>
               <div>
                 <div className="fb-header-title">{brand} Assistant</div>
-                <div className="fb-header-sub">Robotics • Kits • Workshops</div>
+                <div className="fb-header-sub">
+                  <span className="fb-status"><span className="dot" /> Online</span> • Robotics • Kits • Workshops
+                </div>
               </div>
             </div>
             <button className="fb-close" aria-label="Close chat" onClick={() => setOpen(false)}>✕</button>
@@ -146,15 +148,29 @@ export default function FBChat({
 
           <div className="fb-messages" ref={listRef}>
             {messages.map((m, i) => (
-              <div key={i} className={`fb-bubble ${m.role === "user" ? "me" : "bot"}`}>
-                {linkify(m.content)}
+              <div key={i} className={`fb-row ${m.role === "user" ? "me" : "bot"}`}>
+                {m.role !== "user" && <div className="fb-avatar">🤖</div>}
+                <div className={`fb-bubble ${m.role === "user" ? "me" : "bot"}`}>
+                  {linkify(m.content)}
+                </div>
+                {m.role === "user" && <div className="fb-avatar you">You</div>}
               </div>
             ))}
+
+            {busy && (
+              <div className="fb-row bot typing-row">
+                <div className="fb-avatar">🤖</div>
+                <div className="fb-bubble bot typing">
+                  <span className="dots"><i></i><i></i><i></i></span>
+                </div>
+              </div>
+            )}
+
             {error && <div className="fb-error">{error}</div>}
 
-            {!messages.some(m => m.role === "user") && starterTips?.length > 0 && (
+            {!messages.some(m => m.role === "user") && !busy && (
               <div className="fb-suggestions">
-                <div className="fb-suggest-label">Try one:</div>
+                <div className="fb-suggest-label">Quick questions</div>
                 <div className="fb-suggest-list">
                   {starterTips.map((t, idx) => (
                     <button key={idx} className="fb-suggest" onClick={() => send(t)}>{t}</button>
@@ -175,7 +191,7 @@ export default function FBChat({
             <textarea
               className="fb-textarea"
               value={input}
-              placeholder="Ask about us about anything!"
+              placeholder="Ask about workshops, kits, events, partnerships…"
               rows={1}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => {
@@ -185,8 +201,8 @@ export default function FBChat({
                 }
               }}
             />
-            <button className="fb-send" disabled={busy} type="submit">
-              {busy ? "Sending…" : "Send"}
+            <button className="fb-send" disabled={busy} type="submit" aria-label="Send">
+              ➤
             </button>
           </form>
         </div>
